@@ -306,12 +306,12 @@ SVGTransformable::getConsolidation(SVGMatrix * m)
 		SVGFirstTransform *first = 0;
 		
 		// place to insert the transform in the list if create is set
-		unsigned int place = 0;
+		unsigned int place = numTransform;
 
 		// if the transform list is not empty, the only possible place for the
-		// first transform is 0
+		// first transform is #0 (starting from the end)
 		if(numTransform > 0) {
-			first = dynamic_cast< SVGFirstTransform * >(transforms.getItem(0));
+			first = dynamic_cast< SVGFirstTransform * >(transforms.getItem(numTransform - 1));
 		}
 
 		// creating & inserting the transform if needed
@@ -330,17 +330,17 @@ SVGTransformable::getConsolidation(SVGMatrix * m)
 		SVGSecondTransform *second = 0;
 
 		// place to insert the transform in the list if create is set
-		unsigned int place = 0;
+		unsigned int place = numTransform;
 
 		// the transform #0 could be the one we are looking for
 		if(numTransform > 0) {
-			second = dynamic_cast< SVGSecondTransform * >(transforms.getItem(0));
+			second = dynamic_cast< SVGSecondTransform * >(transforms.getItem(numTransform - 1));
 		}
 		// if it wasn't, it can be the #1 only if #0 is a SVGFirstTransform
 		if((numTransform > 1) && (second == 0) &&
-		   (dynamic_cast< SVGFirstTransform * >(transforms.getItem(0)) != 0)) {
-			second = dynamic_cast< SVGSecondTransform * >(transforms.getItem(1));
-			place += 1;
+		   (dynamic_cast< SVGFirstTransform * >(transforms.getItem(numTransform - 1)) != 0)) {
+			second = dynamic_cast< SVGSecondTransform * >(transforms.getItem(numTransform - 2));
+			place -= 1;
 		}
 		
 		// creating & inserting the transform if needed
@@ -359,25 +359,25 @@ SVGTransformable::getConsolidation(SVGMatrix * m)
 		SVGThirdTransform *third = 0;
 
 		// place to insert the transform in the list if create is set
-		unsigned int place = 0;
+		unsigned int place = numTransform;
 
 		// the transform #0 could be the one we are looking for
 		if(numTransform > 0) {
-			third = dynamic_cast< SVGThirdTransform * >(transforms.getItem(0));
+			third = dynamic_cast< SVGThirdTransform * >(transforms.getItem(numTransform - 1));
 		}
 		// if it wasn't, it can be the #1 only if #0 is a SVGFirstTransform or a SVGSecondTransform
 		if((numTransform > 1) && (third == 0) && 
-			((dynamic_cast< SVGFirstTransform * >(transforms.getItem(0)) != 0) ||
-			 (dynamic_cast< SVGSecondTransform * >(transforms.getItem(0)) != 0))) {
-			third = dynamic_cast< SVGThirdTransform * >(transforms.getItem(1));
-			place += 1;
+			((dynamic_cast< SVGFirstTransform * >(transforms.getItem(numTransform - 1)) != 0) ||
+			 (dynamic_cast< SVGSecondTransform * >(transforms.getItem(numTransform - 1)) != 0))) {
+			third = dynamic_cast< SVGThirdTransform * >(transforms.getItem(numTransform - 2));
+			place -= 1;
 		}
 		// if it wasn't, it can be the #2 only if #0 is a SVGFirstTransform and #1 is a SVGSecondTransform
 		if((numTransform > 2) && (third == 0) && 
-			(dynamic_cast< SVGFirstTransform * >(transforms.getItem(0)) != 0) &&
-			(dynamic_cast< SVGSecondTransform * >(transforms.getItem(1)) != 0)) {
-			third = dynamic_cast< SVGThirdTransform * >(transforms.getItem(2));
-			place += 1;
+			(dynamic_cast< SVGFirstTransform * >(transforms.getItem(numTransform - 1)) != 0) &&
+			(dynamic_cast< SVGSecondTransform * >(transforms.getItem(numTransform - 2)) != 0)) {
+			third = dynamic_cast< SVGThirdTransform * >(transforms.getItem(numTransform - 3));
+			place -= 1;
 		}
 		
 		// creating & inserting the transform if needed
