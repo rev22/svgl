@@ -50,7 +50,7 @@ namespace svg {
   void
   SVGClipPathElement::glTraverse(svgl::Context * svglContext, svgl::GLInfo* glinfo)
   {
-    std::cerr << "SVGClipPathElement::glTraverse should not be used" __FL__;
+//    std::cerr << "SVGClipPathElement::glTraverse should not be used" __FL__;
     glPreTraverse(svglContext, glinfo);
     glPostTraverse(svglContext, glinfo);
   }

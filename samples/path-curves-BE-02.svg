@@ -28,7 +28,7 @@
 <!--= Note. After October 2000, revision history is kept as CVS 'commit' =-->
 <!--= log messages, and therefore is no longer in the preceding preamble.=-->
 <!--======================================================================-->
-<svg  id="svg-root" width="450" height="450">
+<svg  id="svg-root" width="450" height="450" xmlns:xlink="http://www.w3.org/1999/xlink">
 	<title id="test-title">path-curves-BE-02</title>
 	<desc id="test-desc">Test that the viewer has the basic capability to handle the 'path' element and data (d) attribute in combination with the cubic Bezier curveto, both regular and shorthand/smooth forms - C, c, S, s (along with Mm and Zz).</desc>
 	<!--======================================================================-->
