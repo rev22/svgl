@@ -335,12 +335,12 @@ SVGTransformable::getConsolidation(SVGMatrix * m)
 		// the transform #0 could be the one we are looking for
 		if(numTransform > 0) {
 			second = dynamic_cast< SVGSecondTransform * >(transforms.getItem(numTransform - 1));
+			place -= 1;
 		}
 		// if it wasn't, it can be the #1 only if #0 is a SVGFirstTransform
 		if((numTransform > 1) && (second == 0) &&
 		   (dynamic_cast< SVGFirstTransform * >(transforms.getItem(numTransform - 1)) != 0)) {
 			second = dynamic_cast< SVGSecondTransform * >(transforms.getItem(numTransform - 2));
-			place -= 1;
 		}
 		
 		// creating & inserting the transform if needed
@@ -364,6 +364,7 @@ SVGTransformable::getConsolidation(SVGMatrix * m)
 		// the transform #0 could be the one we are looking for
 		if(numTransform > 0) {
 			third = dynamic_cast< SVGThirdTransform * >(transforms.getItem(numTransform - 1));
+			place -= 1;
 		}
 		// if it wasn't, it can be the #1 only if #0 is a SVGFirstTransform or a SVGSecondTransform
 		if((numTransform > 1) && (third == 0) && 
@@ -377,7 +378,6 @@ SVGTransformable::getConsolidation(SVGMatrix * m)
 			(dynamic_cast< SVGFirstTransform * >(transforms.getItem(numTransform - 1)) != 0) &&
 			(dynamic_cast< SVGSecondTransform * >(transforms.getItem(numTransform - 2)) != 0)) {
 			third = dynamic_cast< SVGThirdTransform * >(transforms.getItem(numTransform - 3));
-			place -= 1;
 		}
 		
 		// creating & inserting the transform if needed
