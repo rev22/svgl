@@ -1,0 +1,4 @@
+#!/bin/sh
+
+if [ ! -d gen ]; then mkdir gen && mkdir gen/src && mkdir gen/svg; fi
+if [ ! -d include ]; then mkdir -p include/svgl ; fi

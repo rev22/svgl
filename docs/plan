@@ -1,0 +1,27 @@
+stef
+----
+
+currently working on:
+- minimal non-regression tests
+
+then:
+- fix obvious bugs (texture loading on win, depth test) 
+- gl optimization, invalidation mechanism
+- new style engine
+
+in no particular order:
+- think about next paper. direction: RUI
+- begin to design a high-level api ala pad++,jazz
+- optimization hook
+- add mbl's stuff
+- more filters especially lighting
+- CPUs, GPUs
+- performance test (ZUI, with UMA...)
+- redesign sub-system (glft, animation etc.)
+
+jdf
+---
+
+currently working on:
+then:
+in no particular order:

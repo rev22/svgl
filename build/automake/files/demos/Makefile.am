@@ -1,0 +1,3 @@
+.SILENT: @DISABLE_SILENT@
+
+SUBDIRS = tutorial

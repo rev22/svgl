@@ -1,0 +1,14 @@
+first time:
+in srcdir:
+$ ./build/make/bootstrap
+
+in $buildir:
+$ srcdir/configure
+make scripts
+make
+make test
+
+alternatively, you can check the tutorials...
+
+to clean the source tree:
+./cleanup

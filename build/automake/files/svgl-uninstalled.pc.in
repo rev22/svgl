@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@abs_builddir@
+includedir=@abs_srcdir@
+
+Name: svgl
+Description: 
+Version: @VERSION@
+Cflags: @CPPFLAGS@ -I${includedir}
+Libs: @LDFLAGS@ ${libdir}/glft/libglft.la @LIBS@

@@ -1,0 +1,271 @@
+see also svgl/docs/plan
+
+current TODO:
+
+client #1 pioupiou inc:
+antialiasing
+	gradient with texture...
+	everything using stencil will not be antialiased... (or FSAA)
+optimization
+
+tutorial
+	#simplest
+	#loading a file
+	#zoom and pan
+	#picking and interacting
+		#raise a shape
+	#using an external document  (document, use...)
+	#text: warning quand il n'y a pas de fontes !! -> et ca crashe !
+	resize a shape (using transparent markers ?)
+	animation
+		api is not good enough
+		#glutPostRedisplay -> implicit
+	printing a document
+	non-scalable items...
+		position but not size, nor width...
+		put position in a group
+
+optimization
+	list
+		array
+		<use> at various lod
+	lod
+		very small -> nothing or a point
+		everything as a bezier ?
+			update glft
+		variable tesselation precision, update on segments only
+		if it fills the entire space -> rect
+		for a shape -> repr[apparent bbox]
+		share repr (display list) between shapes of same kind -> circle, rect...
+		#for a <g> -> take the max apparent size, not the bounding box of <g>
+
+		setPositionChanged(true); // x y
+		setGeometryChanged(true); // r width height
+		setStyleChanged(true);
+			setFill/StrokeChanged -> color/the way it's drawn
+			setStrokeWidthChanged -> geometry
+		setTransformChanged(true);
+
+	culling
+		bbox update when zooming (hint)
+		animation does not require redrawing at each frame
+
+	geometry : everything is turned into an agg path - maybe not optimal with very simple common shape (rect wo stroke, circle wo stroke, geometry can be shared...)
+	complete addition of agg
+		make a distance iterator over a path
+			bezier curve : what is the value of t corresponding to a distance s over the path ?
+		a length function
+	
+
+simple api for
+	#text
+		do something more general (all unicode::String should have a const char * and std::string counterpart)
+	picking
+	animation
+
+fonts:
+	maximize legibility : don't use advance from another font (except for interaction), but row spans...
+
+remove sdom
+       remove template and old api
+       print xml document
+
+bug
+	macosx:# zoom interaction
+		#animation (due to glut)
+
+
+do something for vector text (optimization)
+check memory leak for polygon gen
+      gc...
+
+real todo:
+---------
+
+- RENORMALIZATION
+	text much better now, but still:
+		text transforms
+		picking tspan and textonpath
+		not thread-safe
+		decoration
+		alignment
+
+	- redo gradient -> color traverse must use BoundingBoxTraverse instead of getBoundingBox
+	- add an arc segment type in bezierpath [jdf]
+	- put a bezier * in SVGPathElement, to avoid recomputation...
+	- round corner (using gluDisk or better bezierpath...)
+	- put everything in w3c:: ?
+
+- filters (boooooh, imaging subset is not supported)
+	ah ah: http://www.nvidia.com/Marketing/Developer/DevRel.nsf/pages/A86B9D846E815D628825681E007AA680
+	supported from driver v10
+	blur:
+	Four Tricks for Fast Blurring in Software and Hardware
+	http://www.gamasutra.com/features/20010209/evans_01.htm
+	(with mip-mapping !! -> cool for speed)
+
+	padding space computation does not follow the spec (15.5) on purpose since I don't agree with it.
+	blurring next to the image edge produces a black halo
+
+
+- style stuff must be redone
+	see jdf's work on css
+	ask explicitly for local change, to minimize state change (important for text)
+
+- picking is not clean.
+	Default is bottom-top, name the iterator with BottomTop and TopBottom
+	redesign it
+
+- font autoscale -> does not work with gradient text
+
+- use edge flag (transparency in paths->marche pas, vectorial fonts)
+- patterns
+- masking (with textures ? noooo!)
+- scripting
+- view
+- linking
+
+at the end:
+- svg images
+- switch
+
+tests:
+------
+treemap (see jdf's)
+jazz/pad++ (zui, see-through tools)
+glade
+gnome canvas
+
+configure
+---------
+check for python
+check if headers gen actually worked
+
+
+bugs:
+----
+- text with gradient may produce glitches because of autoscale : the bbox asked is not the same than the bbox of the font actually used...
+- radial gradient - pad mode : it seems that the padding circle is very large, computation seem to be not correct (glinfo->stencilDisableTest() to see it...)
+- clipping with depth-buffer and multipass does not work
+- glinfo::stencilEnableTopAndPush and depth-buffer does not work
+- glinfo::stencilEnableTopAndPop does not work
+- polygon stroke rendering: vertex are truncated
+- didn't test multiple stencil use -> maybe we should have a state that says if we're actually rendering
+	or if we just want to render into the stencil...
+- stenciling behaves strangely (make supertest, then go through file to file using arrows->maybe an error somewhere and stencil is not pop'd)
+- see gradient filling with complex text...
+	gradient after text transform. what about previous transforms with userSpaceOnUse ? do they apply ? if yes: fix radial.
+		$(SVGTEST) examples/gradPatt-radialGr-BE-04.svg
+
+- there is a bug with text from time to time (it does not appear). Erasing font_cache removes the bug.
+- text transforms do not work due to a glTranslate(x,y) for SVGTextElement
+- markers
+	'orient' in markers -> unconsistency between dtd and idl
+	style properties and parent inheritance -> need to redesign the css engine... (paint-markers-BE-04.svg)
+- there is a lot of virtual call -> default behavior
+	one can change the implementation of each basic shape to speed up things a little bit.
+
+- scripts enum_map.py: semi-generated by genFromIdl, but be careful with svg::SVGGradientElement::SVG_SPREADMETHOD, ... Must be fixed
+	by looking up in inherits
+
+-gc
+	if gc seems to deallocate something allocated with ::new, it may be due to a bad link with libgc.so
+	ex: libsdom.so used to be linked without -lgc, so the standard malloc was used instead...
+	caveat: every program that uses svgl must have their libs linked to libgc.so... what if it's a standard lib
+		that calls malloc ????
+	gcc-3.0 -> almost hard link to malloc@@GLIBC_2, not to malloc...
+
+partly done:
+-----------
+- <text> transform
+	alignment for single char with texture mode ext-tspan-BE-02.svg
+
+- gradient transform
+	ok for linear
+	not for radial
+		done, should be tested
+
+- <use> behavior
+	#x,y,width,height
+	#style
+
+- ellipses does not work properly: stroke is shread and has not a constant width
+	ok now, thanks to gluEllipse, but gluDisk* family can be optimized in loop computation...
+
+- asBezier for marker and corner...
+- boundingboxtraverse->ask for boundingbox, add strokewidth, then render ??
+- markers
+	-orient mechanism is here but not correctly implemented
+- picking
+	picking should use a pickTraverse, since we have multiple hits per shape if it's thick (especially with a path...)
+	- do a pickTraverse
+		(and use it when stenciling)
+		ok, but <svg><marker> any viewport duplicates code between glTraverse and pickTraverse
+		we must differentiate between stroke and fill (maybe marker ?)
+
+- use, symbol
+- animations
+	- call for glutPostRedisplay() must be avoided
+	- if there are multiple <animateTransform>, they are reversed... similarly, <animateMotion> add 2 transforms,
+	which may lead to problems if there are some <animateTransform>...
+	ok, workaround trick by walking through <animate...> in reverse order->check if the semantic is right -> no, because of prev.begin...
+	- <set> is not done
+	- no keySplines for timing
+	- it's currently only 'paced'
+	- no event animation...
+	- put animation stuff in smil::
+	- animate color: new RGBColor each time->time consuming, put one in animateElement
+	- Animated<X> takes twice the space even if it's not animated (maybe do a reset over all animated values when
+		beginning the animation)
+
+- multipass rendering for opacity, masking filters...
+	see Pbuffer extension, especially nvidia. wrong, only for windows, wait for render-into-texture
+- try using glOrtho(0,w,h,0,-1,1) instead of glOrtho(0,w,0,h,-1,1) to flip the flow
+- why the bounding box rendering produces 2 quads ? (see SVGGElement)
+
+- images
+	png ok, except palette and a few formats
+	see also changed viewport
+
+- viewbox (svg (done), symbol, marker, pattern, view)
+- radial gradient
+	repeat and reflect not done
+	can be optimized, vertex are produced twice per circle frontier
+- group opacity does work. For opaque shapes in a group, use stencil.
+- 'opacity' and 'opacity' with stroke done
+- SVGAElement inherits from SVGURI... but has not the same value for xlink::show -> typing problem
+- 'inherit' in various styling attributes...
+- 'display:none' in styling attributes + 'visibility'
+	initial implementation done, but it's far from being complete
+- text alignment
+- exceptions
+- texts
+	problem with dpi ?
+	vector font to choose when scaled
+	problem with bounding box, see the circular gradient example, if there is a transform on the text it may not work...
+- linear gradient
+	with texture text does not work
+	gradient transform
+	groups (using bounding box...) -> see pb in text as well...
+	linear gradient: much simpler calculation !! (see docs/uist2001/gradient.svg)
+- the tesselation of polygons contain a non-portable hack...
+- replace conic tesselation with cubics or quadrics
+- linear gradient: maybe we can optimize the gradient rectangle (CPU vs GPU ?)
+- test for painter algorithm with sorting and z buffer
+- transparency of complex path: stencil or z buffer
+- "opacity" instead of "fill-opacity" and "stroke-opacity"
+- get_float does not handle exponent.
+
+
+things to think of:
+------------------
+- generate forward declaration to reduce compile time
+- xdpi and ydpi for cm,mm... and not pixels
+- the css scheme is not valid, children inherits from parent...done but it's a little bit complex
+- anti-aliasing with textures
+texture mapping as a fundamental drawing primitive
+paul haeberli
+- linear gradient with vector text has a strange bounding box (disable GL_STENCIL_TEST to see it... it' t_FG computation.)
+	well, I think it's ok, since the bounding box of the text does not match exactly the gradient vector...
+
+

@@ -1,0 +1,52 @@
+#!/bin/sh
+
+sep=/
+s=$1
+
+case $s in
+/*)
+	echo $s;
+	exit;;
+*);;
+esac
+
+s="`pwd`$sep$s"
+#echo $s
+
+while true; do
+	t=`echo "$s" | sed -e "s@$sep@ @"`;
+	#echo $s $t
+	if test "$s" = "$t"; then
+		break;
+	fi;
+	s=$t
+done;
+
+#echo $s
+
+t=""
+for i in $s; do
+	t="$i $t"
+done
+
+#echo $t
+
+cont=0
+s=""
+for i in $t; do
+	if test $cont -ge 1; then
+		cont=$(($cont-1))
+		continue
+	fi
+	if test $i = ".."; then
+		cont=$(($cont+1))
+	elif test $i = "."; then
+		continue
+	else
+		s="/$i$s"
+	fi
+done
+
+echo $s
+
+

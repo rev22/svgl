@@ -1,0 +1,12 @@
+echo setting up in ../..
+
+dir=build/make
+files="Makefile.in bootstrap cleanup configure.in svgl-config.in tools"
+
+cd ../..
+for i in $files; do
+	#echo $dir/$i
+	ln -fs $dir/$i .;
+done;
+touch .cleanupok
+

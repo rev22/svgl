@@ -1,0 +1,49 @@
+svgl is a library that displays SVG documents using OpenGL.
+http://svgl.sf.net
+
+authors:
+Stephane Conversy, conversy@enac.fr, http://www.tls.cena.fr/~conversy
+Jean-Daniel Fekete, fekete@inria.fr, http://www.lri.fr/~conversy
+copyright (c) 2000-2004
+
+license: gnu LGPL
+see licence.txt
+see docs/agglicense.txt for agg license
+
+build:
+you must have built glft, available at the same place than svgl (install not mandatory)
+mkdir ~/build/svgl
+cd ~/build/svgl
+~/src/svgl/build/automake/bootstrap
+./configure
+(if glft is not installed, try env PKG_CONFIG_PATH=$HOME/build/glft ./configure, assuming that glft has been built in ~/build/glft)
+make
+
+test:
+env GLFT_FONTDIR=/my/path/to/truetype/fonts demos/00simple
+
+install:
+make install
+
+(see docs/INSTALL for further explanations)
+
+
+documentation:
+see docs/*
+
+part of svgl was developed during SC's post-doc period at
+the Ecole des Mines de Nantes (http://www.emn.fr)
+from October 2000 to September 2001.
+
+Stephane Conversy is now at Ecole Nationale de l'Aviation Civile
+and Centre d'Etudes de la Navigation Aerienne, Toulouse, France
+
+Jean-Daniel Fekete is now at the
+Laboratoire de Recherche en Informatique,
+Universite Paris-Sud an INRIA, Orsay, France
+
+Credits: important contributions were made by
+Nicolas Roussel
+Renaud Blanch
+Jean-Rene Courtois
+

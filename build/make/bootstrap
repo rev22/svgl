@@ -1,0 +1,17 @@
+#!/bin/sh
+
+if test -d apps; then
+    (cd build/make && ./setup)
+fi;
+
+echo "running aclocal"
+aclocal
+
+echo "running automake"
+automake -a
+
+echo "running libtoolize"
+libtoolize --copy --force
+
+echo "running autoconf"
+env WANT_AUTOCONF_2_5=1 autoconf

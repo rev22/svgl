@@ -1,0 +1,23 @@
+#ifndef dom_hpp
+#define dom_hpp
+#include <w3c/dom/Attr.hpp>
+#include <w3c/dom/CDATASection.hpp>
+#include <w3c/dom/CharacterData.hpp>
+#include <w3c/dom/Comment.hpp>
+#include <w3c/dom/DOMException.hpp>
+#include <w3c/dom/DOMImplementation.hpp>
+#include <w3c/dom/Document.hpp>
+#include <w3c/dom/DocumentFragment.hpp>
+#include <w3c/dom/DocumentType.hpp>
+#include <w3c/dom/Element.hpp>
+#include <w3c/dom/Entity.hpp>
+#include <w3c/dom/EntityReference.hpp>
+#include <w3c/dom/NamedNodeMap.hpp>
+#include <w3c/dom/Node.hpp>
+#include <w3c/dom/NodeList.hpp>
+#include <w3c/dom/Notation.hpp>
+#include <w3c/dom/ProcessingInstruction.hpp>
+#include <utils/String.hpp>
+#include <utils/StringBuffer.hpp>
+#include <w3c/dom/Text.hpp>
+#endif

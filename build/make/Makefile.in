@@ -1,0 +1,499 @@
+# Generated automatically from Makefile.in by configure.
+
+redirect: all
+
+# ---------------------------------------------
+
+svgl_srcdir := @svgl_srcdir@
+svgl_builddir := @svgl_builddir@
+svgl_srcincludedir := $(svgl_srcdir)/src
+svgl_buildincludedir := $(svgl_builddir)/src
+
+SHELL     = @SHELL@
+CXX       = @CXX@
+MKDIR = @MKDIR@
+TOUCH = @TOUCH@
+FIND = @FIND@
+
+CPPFLAGS  = @CPPFLAGS@ -I$(svgl_srcincludedir) -I$(svgl_srcincludedir)/utils -I$(svgl_srcincludedir)/w3c -I$(svgl_srcincludedir)/agg -I$(svgl_builddir)/gen -I$(svgl_buildincludedir) -DSVGL_USE_GC=@SVGL_USE_GC@
+CXXFLAGS  = @CXXFLAGS@
+
+LDFLAGS   = @LDFLAGS@
+LIBS      = @LIBS@
+
+DESTDIR   = @prefix@
+
+PYTHON := python
+
+TO = @OBJEXT@
+EXE = @EXEEXT@
+
+TEST_SUITE_DIR := $(HOME)/src/svgtests1.0
+TEST_SUITE_FILES := $(wildcard $(TEST_SUITE_DIR)/*.svg)
+
+# ---------------------------------------------
+
+ifneq ($(findstring g++,$(CXX)),)
+# for linux
+CXX_OUT = -o $(empty)
+SHARED_LIB_SUFFIX := .so
+ARCHIVE_LIB_SUFFIX := .a
+endif
+
+ifneq ($(findstring cl,$(CXX)),)
+CFLAGS_WARNING = -nologo -GX -GR -W3 -DWIN32
+CFLAGS_DEBUG = $(OPTIM)
+CXX_OUT = "-Fo"
+A = lib
+AR = lib
+AR_OUT = "/out:"
+LINK = $(CXX) $(CXXFLAGS) 
+LINK_OUT = "-Fe"
+SHARED_LIB_SUFFIX := .dll
+ARCHIVE_LIB_SUFFIX := .lib
+else
+endif
+
+ifeq ($(CXX),CC)
+# for irix
+CXX=CC -DIRIX -LANG:std -woff 3303
+CC=cc
+CFLAGS_WARNING := -fullwarn
+CFLAGS_DEBUG := -g
+DEPCOMP := tools/depcomp
+CXXDEPMODE := depmode=sgi
+LDFLAGS := -L/$(HOME)/local/irix-6.5/lib $(GL_LDFLAGS)
+LDLIBS := -lxerces-c1_3 -lpthread $(GL_LDLIBS) -lm
+CXX_OUT = -o $(empty)
+SHARED_LIB_SUFFIX := .so
+ARCHIVE_LIB_SUFFIX := .a
+endif
+
+ifeq (@OS@,Cygwin)
+SHARED_LIB_SUFFIX = .dll
+endif
+
+ifeq (@OS@,MACOSX)
+SHARED_LIB_SUFFIX = .dylib
+MKSHLIB   = $(CXX) -dynamiclib -flat_namespace -undefined suppress -install_name @executable_path/libsvgl$(SHARED_LIB_SUFFIX)
+else
+MKSHLIB   = $(CXX) -shared -all
+endif
+
+
+
+# ---------------------------------------------
+
+APPS := @apps@
+apps: $(APPS)
+
+DEMOS := @demos@
+demos: $(DEMOS)
+
+# regular build
+all: lib apps demos tests
+
+# always do the following target regardless to their homonymous(?) directory
+SUBDIRS := scripts apps demos tests
+.PHONY : subdirs $(SUBDIRS) headers
+subdirs: $(SUBDIRS)
+
+VPATH := $(svgl_srcdir)
+
+# ---------------------------------------------
+# svgl lib
+
+#svgl_srcs = $(shell find $(svgl_srcdir)/src -name "*.cpp") $(shell find $(svgl_builddir)/gen -name "*.cpp")
+
+#find src -name "*cpp" \! -name "*#*" | xargs echo
+svgl_src_srcs := src/agg/agg_curves.cpp src/agg/agg_gen_dash.cpp src/agg/agg_gen_stroke.cpp src/agg/agg_path_storage.cpp src/dyglc/block.cpp src/svgl/AnimationManager.cpp src/svgl/bezierpath.cpp src/svgl/BezierPathDistanceIterator.cpp src/svgl/BezierPathGlDisplay.cpp src/svgl/BezierPathLength.cpp src/svgl/BoundingBoxManager.cpp src/svgl/colors.cpp src/svgl/DisplayManager.cpp src/svgl/ExternalEntityManager.cpp src/svgl/FakeTimeManager.cpp src/svgl/GLInfo.cpp src/svgl/gluEllipse.cpp src/svgl/gluShadedDisk.cpp src/svgl/ImageManager.cpp src/svgl/InitHelper.cpp src/svgl/MultiPassManager.cpp src/svgl/parseHelper.cpp src/svgl/parsePathSegList.cpp src/svgl/parsePoints.cpp src/svgl/Parser.cpp src/svgl/parseTransform.cpp src/svgl/PickManager.cpp src/svgl/screenshot.cpp src/svgl/strings.cpp src/svgl/TextureSnapshot.cpp src/svgl/TimeManager.cpp src/utils/EntityResolver.cpp src/utils/FileInputSource.cpp src/utils/StdioInputSource.cpp src/utils/String.cpp src/utils/StringBuffer.cpp src/utils/StringImpl.cpp src/utils/StringInputSource.cpp src/utils/StringUtils.cpp src/w3c/css/CSSRGBColor.cpp src/w3c/css/CSSStyle.cpp src/w3c/css/CSSURI.cpp src/w3c/dom/Attr.cpp src/w3c/dom/AttrDef.cpp src/w3c/dom/CDATASection.cpp src/w3c/dom/CharacterData.cpp src/w3c/dom/ChildNode.cpp src/w3c/dom/Comment.cpp src/w3c/dom/Document.cpp src/w3c/dom/DocumentFragment.cpp src/w3c/dom/DocumentType.cpp src/w3c/dom/DOMException.cpp src/w3c/dom/DOMImplementation.cpp src/w3c/dom/Element.cpp src/w3c/dom/Entity.cpp src/w3c/dom/EntityReference.cpp src/w3c/dom/ext/DOMParser.cpp src/w3c/dom/ext/DOMVisitor.cpp src/w3c/dom/ext/DOMWriter.cpp src/w3c/dom/impl/AttributeMap.cpp src/w3c/dom/impl/NamedNodeMapImpl.cpp src/w3c/dom/impl/NodeListImpl.cpp src/w3c/dom/Node.cpp src/w3c/dom/Notation.cpp src/w3c/dom/ParentNode.cpp src/w3c/dom/ProcessingInstruction.cpp src/w3c/dom/Text.cpp src/w3c/svg/SVGAltGlyphElement.cpp src/w3c/svg/SVGAnimateColorElement.cpp src/w3c/svg/SVGAnimateElement.cpp src/w3c/svg/SVGAnimateMotionElement.cpp src/w3c/svg/SVGAnimateTransformElement.cpp src/w3c/svg/SVGAnimationElement.cpp src/w3c/svg/SVGCircleElement.cpp src/w3c/svg/SVGClipPathElement.cpp src/w3c/svg/SVGDefsElement.cpp src/w3c/svg/SVGDescElement.cpp src/w3c/svg/SVGDocument.cpp src/w3c/svg/SVGElement.cpp src/w3c/svg/SVGEllipseElement.cpp src/w3c/svg/SVGFEBlendElement.cpp src/w3c/svg/SVGFEColorMatrixElement.cpp src/w3c/svg/SVGFECompositeElement.cpp src/w3c/svg/SVGFEFloodElement.cpp src/w3c/svg/SVGFEGaussianBlurElement.cpp src/w3c/svg/SVGFEMergeElement.cpp src/w3c/svg/SVGFEMergeNodeElement.cpp src/w3c/svg/SVGFEOffsetElement.cpp src/w3c/svg/SVGFESpecularLightingElement.cpp src/w3c/svg/SVGFilterElement.cpp src/w3c/svg/SVGFilterPrimitiveStandardAttributes.cpp src/w3c/svg/SVGGElement.cpp src/w3c/svg/SVGGradientElement.cpp src/w3c/svg/SVGImageElement.cpp src/w3c/svg/SVGLength.cpp src/w3c/svg/SVGLinearGradientElement.cpp src/w3c/svg/SVGLineElement.cpp src/w3c/svg/SVGLocatable.cpp src/w3c/svg/SVGMarkerElement.cpp src/w3c/svg/SVGMatrix.cpp src/w3c/svg/SVGMisc.cpp src/w3c/svg/SVGPathElement.cpp src/w3c/svg/SVGPathSeg.cpp src/w3c/svg/SVGPatternElement.cpp src/w3c/svg/SVGPolygonElement.cpp src/w3c/svg/SVGPolylineElement.cpp src/w3c/svg/SVGPreserveAspectRatio.cpp src/w3c/svg/SVGRadialGradientElement.cpp src/w3c/svg/SVGRectElement.cpp src/w3c/svg/SVGStylable.cpp src/w3c/svg/SVGSVGElement.cpp src/w3c/svg/SVGSymbolElement.cpp src/w3c/svg/SVGTests.cpp src/w3c/svg/SVGTextContentElement.cpp src/w3c/svg/SVGTextElement.cpp src/w3c/svg/SVGTextPathElement.cpp src/w3c/svg/SVGTransform.cpp src/w3c/svg/SVGTransformable.cpp src/w3c/svg/SVGTransforms.cpp src/w3c/svg/SVGTRefElement.cpp src/w3c/svg/SVGTSpanElement.cpp src/w3c/svg/SVGURIReference.cpp src/w3c/svg/SVGUseElement.cpp
+
+
+# find gen -name "*cpp" \! -name "*#*" | xargs echo
+svgl_gen_srcs := gen/src/destructors.cpp gen/src/ElementGetAttributeByNameMethods.cpp gen/src/ElementParseAttributesMethods.cpp gen/src/ElementPrintMethods.cpp gen/src/makeEnumType.cpp
+#$(svgl_gen_srcs): $(svgl_builddir)/.scripts_done
+
+
+svgl_srcs := $(addprefix $(svgl_srcdir)/,$(svgl_src_srcs)) $(addprefix $(svgl_builddir)/,$(svgl_gen_srcs))
+
+svgl_objs = $(subst $(svgl_srcdir)/,,$(svgl_srcs:.cpp=.o))
+
+ifdef MKSHLIB
+LIB_SUFFIX = $(SHARED_LIB_SUFFIX)
+else
+LIB_SUFFIX = $(ARCHIVE_LIB_SUFFIX)
+endif
+
+svgl_name := src/libsvgl$(LIB_SUFFIX)
+svgl_ldflags := -L$(svgl_builddir)/src
+svgl_libs := -lsvgl
+
+$(svgl_name): $(svgl_objs)
+
+mkgen := $(svgl_builddir)/gen $(svgl_builddir)/gen/.gendone
+lib: $(mkgen) $(svgl_name)
+	$(TOUCH) lib
+
+# ---------------------------------------------
+# glutSVGViewer
+
+glutSVGViewer_srcs := $(shell $(FIND) $(svgl_srcdir)/apps/glutSVGViewer -name "*.cpp")
+glutSVGViewer_objs := $(subst $(svgl_srcdir)/,,$(glutSVGViewer_srcs:.cpp=.o))
+
+apps/glutSVGViewer/glutSVGViewer: lib $(glutSVGViewer_objs)
+	@echo "linking $@" 
+	@$(CXX) -o $@ $(glutSVGViewer_objs) -L. $(LDFLAGS) $(LIBS) ;
+
+apps/glutSVGViewer/glutSVGViewer: LIBS += $(svgl_libs) @glutSVGViewer_LIBS@
+apps/glutSVGViewer/glutSVGViewer: LDFLAGS += $(svgl_ldflags)
+$(glutSVGViewer_objs): CPPFLAGS += -I$(svgl_srcdir)/apps/glutSVGViewer @glutSVGViewer_CPPFLAGS@
+
+glutSVGViewer := apps/glutSVGViewer/glutSVGViewer
+
+# ---------------------------------------------
+# svg2raster
+
+svg2raster_srcs := $(shell $(FIND) $(svgl_srcdir)/apps/svg2raster -name "*.cpp")
+svg2raster_objs := $(subst $(svgl_srcdir)/,,$(svg2raster_srcs:.cpp=.o))
+
+apps/svg2raster/svg2raster: lib $(svg2raster_objs)
+	@echo "linking $@" 
+	@$(CXX) -o $@ $(svg2raster_objs) -L. $(LDFLAGS) $(LIBS) ;
+
+apps/svg2raster/svg2raster: LIBS += $(svgl_libs) -lOSMesa
+apps/svg2raster/svg2raster: LDFLAGS += $(svgl_ldflags)
+$(svg2raster_objs): CPPFLAGS += -I$(svgl_srcdir)/apps/svg2raster
+
+
+# ---------------------------------------------
+# tutorial
+
+tutorial_names := 00-simplest 01-loading 02-zoomAndPan 03-picking 04-useExternal 05-text 06-animation
+tutorial_dir := demos/tutorial
+
+tutorial_srcdir := $(svgl_srcdir)/$(tutorial_dir)
+tutorials := $(addprefix $(tutorial_dir)/,$(tutorial_names))
+
+tutorial: $(tutorials)
+
+$(tutorials): LIBS += $(svgl_libs) @tutorial_LIBS@
+$(tutorials): LDFLAGS += $(svgl_ldflags)
+
+00-simplest_srcs_notdir := 00-simplest.cpp
+00-simplest_srcs := $(addprefix $(tutorial_srcdir)/,$(00-simplest_srcs_notdir))
+00-simplest_objs := $(subst $(svgl_srcdir)/,,$(00-simplest_srcs:.cpp=.o))
+$(tutorial_dir)/00-simplest: lib $(00-simplest_objs)
+	@echo "linking $@" 
+	@$(CXX) -o $@ $(00-simplest_objs) -L. $(svgl_libs) $(LDFLAGS) $(LIBS)
+
+01-loading_srcs_notdir := 01-loading.cpp
+01-loading_srcs := $(addprefix $(tutorial_srcdir)/,$(01-loading_srcs_notdir))
+01-loading_objs := $(subst $(svgl_srcdir)/,,$(01-loading_srcs:.cpp=.o))
+$(tutorial_dir)/01-loading: lib $(01-loading_objs)
+	@echo "linking $@" 
+	@$(CXX) -o $@ $(01-loading_objs) -L. $(svgl_libs) $(LDFLAGS) $(LIBS)
+
+02-zoomAndPan_srcs_notdir := 02-zoomAndPan.cpp
+02-zoomAndPan_srcs := $(addprefix $(tutorial_srcdir)/,$(02-zoomAndPan_srcs_notdir))
+02-zoomAndPan_objs := $(subst $(svgl_srcdir)/,,$(02-zoomAndPan_srcs:.cpp=.o))
+$(tutorial_dir)/02-zoomAndPan: lib $(02-zoomAndPan_objs)
+	@echo "linking $@" 
+	@$(CXX) -o $@ $(02-zoomAndPan_objs) -L. $(svgl_libs) $(LDFLAGS) $(LIBS)
+
+03-picking_srcs_notdir := 03-picking.cpp
+03-picking_srcs := $(addprefix $(tutorial_srcdir)/,$(03-picking_srcs_notdir))
+03-picking_objs := $(subst $(svgl_srcdir)/,,$(03-picking_srcs:.cpp=.o))
+$(tutorial_dir)/03-picking: lib $(03-picking_objs)
+	@echo "linking $@" 
+	@$(CXX) -o $@ $(03-picking_objs) -L. $(svgl_libs) $(LDFLAGS) $(LIBS)
+
+04-useExternal_srcs_notdir := 04-useExternal.cpp
+04-useExternal_srcs := $(addprefix $(tutorial_srcdir)/,$(04-useExternal_srcs_notdir))
+04-useExternal_objs := $(subst $(svgl_srcdir)/,,$(04-useExternal_srcs:.cpp=.o))
+$(tutorial_dir)/04-useExternal: lib $(04-useExternal_objs)
+	@echo "linking $@" 
+	@$(CXX) -o $@ $(04-useExternal_objs) -L. $(svgl_libs) $(LDFLAGS) $(LIBS)
+
+05-text_srcs_notdir := 05-text.cpp
+05-text_srcs := $(addprefix $(tutorial_srcdir)/,$(05-text_srcs_notdir))
+05-text_objs := $(subst $(svgl_srcdir)/,,$(05-text_srcs:.cpp=.o))
+$(tutorial_dir)/05-text: lib $(05-text_objs)
+	@echo "linking $@" 
+	@$(CXX) -o $@ $(05-text_objs) -L. $(svgl_libs) $(LDFLAGS) $(LIBS)
+
+06-animation_srcs_notdir := 06-animation.cpp GlutTimeManager.cpp
+06-animation_srcs := $(addprefix $(tutorial_srcdir)/,$(06-animation_srcs_notdir))
+06-animation_objs := $(subst $(svgl_srcdir)/,,$(06-animation_srcs:.cpp=.o))
+$(tutorial_dir)/06-animation: lib $(06-animation_objs)
+	@echo "linking $@" 
+	@$(CXX) -o $@ $(06-animation_objs) -L. $(svgl_libs) $(LDFLAGS) $(LIBS)
+
+tutorial_objs := $(00-simplest_objs) $(01-loading_objs) $(02-zoomAndPan_objs) $(03-picking_objs) $(04-useExternal_objs) $(05-text_objs) $(06-animation_objs)
+
+$(tutorial_objs): CPPFLAGS += -I$(svgl_srcdir)/$(tutorial_dir) @tutorial_CPPFLAGS@
+
+# ---------------------------------------------
+# tests
+
+tests_names := gllist
+tests_dir := tests
+
+tests_srcdir := $(svgl_srcdir)/$(tests_dir)
+tests := $(addprefix $(tests_dir)/,$(tests_names))
+
+tests: $(tests)
+
+$(tests): LIBS += $(svgl_libs) @tests_LIBS@
+$(tests): LDFLAGS += $(svgl_ldflags)
+
+gllist_srcs_notdir := gllist.cpp panAndZoom.cpp
+gllist_srcs := $(addprefix $(tests_srcdir)/,$(gllist_srcs_notdir))
+gllist_objs := $(subst $(svgl_srcdir)/,,$(gllist_srcs:.cpp=.o))
+$(tests_dir)/gllist: lib $(gllist_objs)
+	@echo "linking $@" 
+	@$(CXX) -o $@ $(gllist_objs) -L. $(svgl_libs) $(LDFLAGS) $(LIBS)
+
+tests_objs := $(gllist_objs)
+$(tests_objs): CPPFLAGS += -I$(svgl_srcdir)/$(tests_dir) @tests_CPPFLAGS@
+
+# ----------------------------------------------------
+
+lobjs := $(svgl_objs) $(glutSVGViewer_objs) $(svg2raster_objs) $(tutorial_objs) $(tests_objs)
+objs := $(lobjs:.o=.o)
+deps := $(lobjs:.o=.dep)
+
+-include __foo_____ $(deps)
+
+ifdef MKSHLIB 
+%$(SHARED_LIB_SUFFIX):
+	@echo "creating dynamic library $@" 
+	$(MKSHLIB) $(LDFLAGS_DEBUG) $(LDFLAGS) -o $@ $^ $(LIBS)
+endif
+
+%$(ARCHIVE_LIB_SUFFIX):
+	@echo "creating static library $@" 
+	@$(AR) $(ARFLAGS) -o $@ $^
+
+%.o: %.cpp
+	@echo "compiling $@"
+	@$(MKDIR) -p $(dir $@)
+	@@DEPMODE@ source='$<' object='$@' depfile='$*.dep' tmpdepfile='$*.tmpdep' $(svgl_srcdir)/tools/depcomp \
+        $(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+
+# ----------------------------------------------------
+
+SCRIPTS := genFromIdl.py makeParseAttribute.py genAttributeParser.py genSvgElement.py makeColors.py
+
+$(svgl_builddir)/gen:
+	$(MKDIR) -p $(svgl_builddir)/gen $(svgl_builddir)/gen/src $(svgl_builddir)/gen/svg
+
+$(svgl_builddir)/gen/.gendone:
+	$(MAKE) scripts && $(TOUCH) $(svgl_builddir)/gen/.gendone
+
+$(svgl_builddir)/.scripts_done: scripts
+
+scripts:
+	(for i in $(SCRIPTS); do PYTHONPATH="$(svgl_builddir)/scripts:$(svgl_srcdir)/scripts" $(PYTHON) $(svgl_srcdir)/scripts/$$i; done )
+	touch $(svgl_builddir)/.scripts_done
+
+interface: $(svgl_srcdir)/scripts/interfaces.py
+	(cd $(svgl_srcdir)/scripts && python genFromIdl.py)
+
+
+
+
+# ----------------------------------------------------
+
+setenv := env LD_LIBRARY_PATH="../src:../glft/glft"
+
+test: $(glutSVGViewer)
+	$(setenv) $(glutSVGViewer) $(svgl_srcdir)/samples/tiger.svg
+
+supertest: $(glutSVGViewer)
+	$(setenv) $(glutSVGViewer) $(TEST_SUITE_FILES)
+
+
+
+SCREENSHOTS_DIR := $(svgl_builddir)/screenshots
+superscreenshot: svg2raster
+	@echo "" > $(SCREENSHOTS_DIR)/err
+	@(for i in $(TEST_SUITE_FILES); do echo $$i >> $(SCREENSHOTS_DIR)/err; $(SET_SVG2RASTER_LDPATH) ./svg2raster -d screenshots $$i 2>> $(SCREENSHOTS_DIR)/err; echo " " >> $(SCREENSHOTS_DIR)/err; done)
+
+superscreenshotpng:
+	(cd $(SCREENSHOTS_DIR) && for i in *.ppm; do pnmtopng $$i > `basename $$i .ppm`.png; done)
+
+
+PASSTEST := $(svgl_srcdir)/share/passtest
+# initialisation  of 'passtest'
+# every files are commented. non-commented files will be tested
+passtestinit:
+	cd $(TEST_SUITE_DIR) && ls *BE*.svg | sed -e "s/\([^.]*\).svg/#\1/" > $(PASSTEST)
+
+reg non-regression-test:
+	python2 scripts/NonRegression.py
+
+
+# ----------------------------------------------------
+
+clean:
+	rm -rf $(lobjs) $(objs) $(deps)
+	rm -rf $(svgl_builddir)/gen
+
+cleanlib:
+	rm -f *.la
+
+
+distclean: clean
+	rm -rf .libs
+	rm -f $(APPS)
+	rm -f *.la
+
+
+# ----------------------------------------------------
+
+testfoo:
+	$(SVGTEST_CMD) $(TEST_SUITE_DIR)/masking-groupOpac-BE-04.svg
+	$(SVGTEST_CMD) examples/masking-groupOpac-BE-04.svg
+	$(SVGTEST_CMD) examples/rendering-orderGr-BE-01.svg
+	$(SVGTEST_CMD) examples/gradPatt-linearGr-BE-01.svg
+	$(SVGTEST_CMD) $(TEST_SUITE_DIR)/coords-viewBox-BE-03.svg
+	$(SVGTEST_CMD) $(TEST_SUITE_DIR)/structure-nested-BE-02.svg
+
+	$(SVGTEST_CMD) $(TEST_SUITE_DIR)/gradPatt-radialGr-BE-05.svg
+	$(SVGTEST_CMD) $(TEST_SUITE_DIR)/gradPatt-referenc-BE-08.svg
+	$(SVGTEST_CMD) examples/gradPatt-radialGr-BE-04.svg
+	$(SVGTEST_CMD) $(TEST_SUITE_DIR)/filters-convolve-BE-06.svg
+	$(SVGTEST_CMD) $(TEST_SUITE_DIR)/gradPatt-linearGr-BE-01.svg
+	$(SVGTEST_CMD) $(TEST_SUITE_DIR)/gradPatt-linearGr-BE-03.svg
+	$(SVGTEST_CMD) examples/gradPatt-stop-BE-06.svg  
+
+
+	$(SVGTEST_CMD) $(TEST_SUITE_DIR)/filters-colorMtrx-BE-03.svg
+
+	$(SVGTEST_CMD)  examples/text-tspan-BE-02.svg
+	$(SVGTEST_CMD)  examples/text-textOnPath-BE-03.svg
+	$(SVGTEST_CMD)  $(TEST_SUITE_DIR)/text-text-BE-01.svg
+
+	$(SVGTEST_CMD)  examples/animation-overall-BE-01.svg
+	$(SVGTEST_CMD)  examples/animation-motion-BE-11.svg
+	$(SVGTEST_CMD)  examples/animation-values-BE-07.svg
+
+	$(SVGTEST_CMD)  examples/tei.svg
+
+	$(SVGTEST_CMD) $(TEST_SUITE_DIR)/shapes-ellipse-BE-02.svg
+
+	./svgtest $(TEST_SUITE_DIR)/clipMaskComposite-clipPath-BE-01.svg
+	./svgtest $(TEST_SUITE_DIR)/gradientPattern-linearGradient-BE-01.svg
+	./svgtest $(TEST_SUITE_DIR)/gradientPattern-linearGradient-BE-02.svg
+	./svgtest $(TEST_SUITE_DIR)/gradientPattern-linearGradient-BE-03.svg
+	./svgtest $(TEST_SUITE_DIR)/gradientPattern-stop-BE-06.svg
+	./svgtest $(TEST_SUITE_DIR)/paint-fill-BE-01.svg
+	./svgtest $(TEST_SUITE_DIR)/shapes-polygon-BE-05.svg
+	./svgtest $(TEST_SUITE_DIR)/path-curves-BE-03.svg
+	./svgtest $(TEST_SUITE_DIR)/path-curves-BE-04.svg
+	./svgtest $(TEST_SUITE_DIR)/path-lines-BE-01.svg
+	./svgtest $(TEST_SUITE_DIR)/paint-stroke-BE-02.svg
+	./svgtest $(TEST_SUITE_DIR)/shapes-polygon-BE-05.svg
+	./svgtest $(TEST_SUITE_DIR)/coordSystem-transforms-BE-02.svg
+	./svgtest $(TEST_SUITE_DIR)/coordSystem-units-BE-01.svg
+	./svgtest $(TEST_SUITE_DIR)/coordSystem-unitsProcessing-BE-04.svg
+	./svgtest $(TEST_SUITE_DIR)/clipMaskComposite-groupOpacity-BE-04.svg
+	./svgtest $(TEST_SUITE_DIR)/filters-feBlend-BE-02.svg
+	./svgtest $(TEST_SUITE_DIR)/filters-feColorMatrix-BE-03.svg
+
+	./svgtest StandAlone01.svg
+	./svgtest opacity01.svg
+
+	./svgtest $(TEST_SUITE_DIR)/structure-symbolUse-BE-05.svg
+	./svgtest $(TEST_SUITE_DIR)/structure-image-BE-06.svg
+	./svgtest $(TEST_SUITE_DIR)/coordSystem-viewbox-BE-03.svg
+
+	./svgtest $(TEST_SUITE_DIR)/coords-unitsProc-BE-04.svg
+	./svgtest $(TEST_SUITE_DIR)/coords-viewBox-BE-03.svg
+
+	$(SVGTEST_CMD)  examples/animation-overall-BE-01.svg
+	$(SVGTEST_CMD)  examples/animation-motion-BE-11.svg
+	$(SVGTEST_CMD)  examples/animation-values-BE-07.svg
+
+	$(SVGTEST_CMD)  examples/masking-clipPath-BE-01.svg
+	$(SVGTEST_CMD)  examples/structure-symbol-BE-05.svg
+
+	$(SVGTEST_CMD) $(TEST_SUITE_DIR)/paint-markers-BE-04.svg
+	$(SVGTEST_CMD) $(TEST_SUITE_DIR)/paint-markers-BE-03.svg
+
+	#$(SVGTEST_CMD) $(TEST_SUITE_DIR)/gradPatt-stop-BE-06.svg
+	#$(SVGTEST_CMD) examples/masking-clipPath-BE-01.svg
+	#$(SVGTEST_CMD) examples/path-curves-BE-02.svg
+	#$(SVGTEST_CMD) $(TEST_SUITE_DIR)/gradPatt-pattern-BE-07.svg
+	#$(SVGTEST_CMD) $(TEST_SUITE_DIR)/filters-blur-BE-12.svg
+	#$(SVGTEST_CMD) examples/masking-groupOpac-BE-04.svg
+	#$(SVGTEST_CMD) examples/lion.svg
+	#$(SVGTEST_CMD) $(TEST_SUITE_DIR)/coords-viewBox-BE-03.svg
+	#$(SVGTEST_CMD) $(SAMPLES_DIR)/tiger.svg
+	#$(SVGTEST_CMD) examples/tiger.svg
+	#$(SVGTEST_CMD) examples/text.svg
+	#$(SVGTEST_CMD) examples/grid.svg
+	#$(SVGTEST_CMD) examples/toto.svg
+	#$(SVGTEST_CMD) $(SAMPLES_DIR)/ca-flag.svg
+	#$(SVGTEST_CMD) $(SAMPLES_DIR)/molecule.svg
+
+
+
+GDBTMPFILE := /tmp/gdbwhere
+
+gdb:
+	echo "where" >  $(GDBTMPFILE) && gdb -x $(GDBTMPFILE) $(SVGTEST_APP) core && rm -f $(GDBTMPFILE)
+
+GDBCATCH := $(svgl_srcdir)/share/gdbcatch
+gdbcatch:
+	$(SET_GLUTSVGVIEWER_LDPATH) gdb -x $(GDBCATCH) ./$(SVGTEST_APP)
+
+prof:
+	#gprof ./glutSVGViewer
+	gprof ./svg2raster
+
+STAT_SCRIPTS := $(wildcard scripts/*.py)
+
+NON_GEN_DIRS := $(shell $(FIND) $(svgl_srcdir)/src/* -type d) $(shell $(FIND) $(svgl_srcdir)/apps/* -type d)
+NON_GEN_srcs := $(wildcard $(addsuffix /*.cpp, $(NON_GEN_DIRS)))
+
+STAT_SOURCES := $(NON_GEN_srcs)
+STAT_HEADERS := $(shell $(FIND) src -name *.hpp -print)
+
+stat:
+	@wc $(STAT_SCRIPTS) $(STAT_SOURCES) $(STAT_HEADERS)
+
+detailstat:
+	@echo scripts:
+	@wc $(STAT_SCRIPTS)
+	@echo sources:
+	@wc $(STAT_SOURCES)
+	@echo headers:
+	@wc $(STAT_HEADERS)
+
+FILES_TO_SAVE := README LICENCE.TXT
+DIRS_TO_SAVE := CVS apps build demos docs misc samples scripts share src tests
+
+AMIINSRCDIR := $(shell if test -e ../svgl/Makefile.in; then echo 'yes'; else echo 'no'; fi)
+ifeq ($(AMIINSRCDIR), "yes")
+FILE_IN_DIRS_TO_SAVE := $(foreach dir,$(DIRS_TO_SAVE),$(shell $(FIND) $(dir) -not -name "*~" -not -path "*CVS*" -not -path "*uist*" -type f -print))
+endif
+
+#TO_SAVE_TAR := $(FILES_TO_SAVE) $(FILE_IN_DIRS_TO_SAVE)
+TO_SAVE_TAR := $(FILES_TO_SAVE) $(DIRS_TO_SAVE)
+
+DATE := $(shell date +%Y%m%d)
+
+srcclean:
+	(cd $(svgl_srcdir) && $(FIND) . -name "*~" -exec rm -f {} \;)
+
+tar: srcclean
+	@(cd $(svgl_srcdir)/.. && tar cvzf svgl.tgz $(addprefix svgl/,$(TO_SAVE_TAR)) )
+
+
+tardist: srcclean
+	@(cd $(svgl_srcdir)/.. && \
+	ln -fs svgl svgl-$(DATE) && \
+	tar cvzf svgl-$(DATE).tgz $(addprefix svgl-$(DATE)/,$(TO_SAVE_TAR)) && \
+	rm -f svgl-$(DATE))
+

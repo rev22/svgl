@@ -1,0 +1,26 @@
+#!/bin/sh
+
+keep="CVS README build apps demos docs samples include licence.html licence.txt misc scripts share src"
+
+if test -f .cleanupok; then
+else
+	echo "cleanup: not in the right dir"
+	exit;
+fi;
+
+for i in *; do
+	found=0
+	for k in $keep; do
+		if test $i = $k; then
+			found=1
+			break;
+		fi;
+	done;
+	if test $found = 1; then
+		continue
+	else
+		rm -rf $i
+	fi
+done;
+
+rm -f .cleanupok

@@ -1,0 +1,33 @@
+body, ol, ul  {
+	text-align: justify;
+	background: white;
+	font-family: Helvetica;
+	font-size: 12pt;
+}
+
+
+
+h1, h2, h3 {
+	font-family: Helvetica; font-weight: bold; font-size: 14pt;
+	margin-left: 0em;
+}
+
+h1 {
+	text-transform: uppercase;
+}
+
+h2 {
+	text-transform: capitalize;
+}
+
+h3 {
+	text-transform: capitalize;
+	font-size: 12pt;
+}
+
+.draft { color: green; }
+
+samp, code {
+	font-family: Courrier; 
+	white-space: pre;
+}

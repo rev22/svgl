@@ -1,0 +1,34 @@
+#!/bin/sh
+
+CPPFLAGS="-I@svgl_srcdir@/src -I@svgl_srcdir@/src/utils -I@svgl_srcdir@/src/w3c -I@svgl_builddir@/src -I@svgl_builddir@/gen @CPPFLAGS@ -DSVGL_USE_GC=1"
+
+CXXFLAGS="@CXXFLAGS@"
+LDFLAGS="-L@svgl_builddir@/src @LDFLAGS@"
+LIBS="-lsvgl @LIBS@"
+
+case $1 in
+  --cppflags)
+    echo $CPPFLAGS
+  ;;
+  --cxxflags)
+    echo $CXXFLAGS
+  ;;
+  --ldflags)
+    echo $LDFLAGS
+  ;;
+  --libs)
+    echo $LIBS
+  ;;
+  --srcdir)
+    echo @top_srcdir@
+  ;;
+  --builddir)
+    echo @svgl_builddir@
+  ;;
+  *)
+    echo "CPPFLAGS=\"$CPPFLAGS\""
+    echo "CXXFLAGS=\"$CXXFLAGS\""
+    echo "LDFLAGS=\"$LDFLAGS\""
+    echo "LIBS=\"$LIBS\""
+  ;;
+esac

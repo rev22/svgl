@@ -1,0 +1,5 @@
+//
+// Prefix header for all source files of the 'svgl' target in the 'svgl' project.
+//
+
+#include <Carbon/Carbon.h>

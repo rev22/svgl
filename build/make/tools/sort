@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# SORTINPUT
+# SORTEXCLUDE
+
+ncppflags=""
+
+for i in $SORTINPUT; do
+    found=0
+    exclude=0
+    for j in $SORTEXCLUDE; do
+	if test $i = $j; then
+	    exclude=1;
+	    break;
+	fi;
+    done;
+    if test $exclude = 0; then 
+	for j in $ncppflags; do
+	#echo comparing $i and $j
+	    if test $i = $j; then
+	    #echo found
+		found=1;
+		break;
+	    fi;
+	done;
+    fi;
+    #echo $i $found
+    if test $found = 0; then
+	#echo adding $i
+	ncppflags="$ncppflags $i"
+    fi;
+done;
+
+echo $ncppflags

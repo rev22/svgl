@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN" "http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd">
+<!--======================================================================-->
+<!--=  Copyright 2000 World Wide Web Consortium, (Massachusetts          =-->
+<!--=  Institute of Technology, Institut National de Recherche en        =-->
+<!--=  Informatique et en Automatique, Keio University). All Rights      =-->
+<!--=  Reserved. See http://www.w3.org/Consortium/Legal/.                =-->
+<!--======================================================================-->
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!-- path-curves-BE-02.svg                                                 -->
+<!--                                                                       -->
+<!-- Test that the viewer has the basic capability to handle the 'path'    -->
+<!-- element and its data (d) attribute in combination with the cubic      -->
+<!-- Bezier curveto commands, C, c, S, s (plus Mm and Zz).                 -->
+<!--                                                                       -->
+<!-- Author : Lofton Henderson, 29-Feb-2000 (based on work                 -->
+<!--                                           of Mark Sgarlato, Adobe).   -->
+<!--                                                                       -->
+<!-- History:                                                              -->
+<!--  29-Feb-2000, LRH, Ser#1 created.                                     -->
+<!--  12-Mar-2000, LH, fix test-framing rect; ser#2                        -->
+<!--  03-Aug-2000, LH: update DOCTYPE for CR DTD, 20000802; ser# .         -->
+<!--  15-Nov-2000, LH: add missing test-body-content group.                -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+<!--======================================================================-->
+<!--= Note. After October 2000, revision history is kept as CVS 'commit' =-->
+<!--= log messages, and therefore is no longer in the preceding preamble.=-->
+<!--======================================================================-->
+<svg  id="svg-root" width="450" height="450">
+	<title id="test-title">path-curves-BE-02</title>
+	<desc id="test-desc">Test that the viewer has the basic capability to handle the 'path' element and data (d) attribute in combination with the cubic Bezier curveto, both regular and shorthand/smooth forms - C, c, S, s (along with Mm and Zz).</desc>
+	<!--======================================================================-->
+	<!--Content of Test Case follows...                  =====================-->
+	<!--======================================================================-->
+	<g id="test-body-content">
+		<!-- ====================================================================== -->
+		<!-- First Curve "X" that has subpath utilizing M, C, S, m, c, & s ======== -->
+		<!-- ====================================================================== -->
+		<text style="font-family:Helvetica;font-size:12;" x="100" y="14">Cubic bezier curves drawn with commands:</text>
+		<path id="X_curve_MCSmcs" style="fill:#FF0000;stroke:#00C000;" d="   M  250 130      C  185 130     150  80     150  80       S  115  25      50  25          m    0 105      c   65   0      100 -50     100 -50       s   35 -55     100 -55   "/>
+		<!-- ====================================================================== -->
+		<!-- Markers for path control points  ===================================== -->
+		<!-- ====================================================================== -->
+		<rect x="248" y="128" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="148" y="78" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="48" y="23" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="48" y="128" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="148" y="78" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="248" y="23" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<text style="font-family:Helvetica;font-size:12;" x="45" y="82">M, C, S, m, c, s</text>
+		<!-- ====================================================================== -->
+		<!-- Infinity using M, c, c, c, C & z ===================================== -->
+		<!-- ====================================================================== -->
+		<path id="Infinity_McccCz" style="fill:red;stroke:#000000;stroke-width:10;opacity:.5;stroke-opacity:.5" d="   M 300  90      c 0  30    7  50    50  0       c 43  -50    50  -30    50  0       c 0  83    -68  -34    -90  -30       C 300  60    300  90    300  90   z  "/>
+		<!-- ====================================================================== -->
+		<!-- Markers for path control points ====================================== -->
+		<!-- ====================================================================== -->
+		<rect x="298" y="88" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="348" y="88" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="398" y="88" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="308" y="58" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<text style="font-family:Helvetica;font-size:12;" x="313" y="50">M, c, c, c, C, z</text>
+		<!-- ====================================================================== -->
+		<!-- Horizontal line utilizing M, C & Z =================================== -->
+		<!-- ====================================================================== -->
+		<path id="Line_MCZ" style="fill:none;stroke:#000000;" d="   M 100 170   C 120 170    180 170    200 170   Z  "/>
+		<!-- ====================================================================== -->
+		<!-- Markers for path control points ====================================== -->
+		<!-- ====================================================================== -->
+		<rect x="98" y="168" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="198" y="168" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<text style="font-family:Helvetica;font-size:12;" x="130" y="190">M, C, Z</text>
+		<!-- ====================================================================== -->
+		<!-- Inverted V using M, C, c & Z ========================================= -->
+		<!-- ====================================================================== -->
+		<path id="Inv_V_MCcZ" style="fill:#00C000;stroke:none;" d="   M  25 360      C  60 360     80 275     75 260       c  -5  15     15 100     50 100   Z  "/>
+		<!-- ====================================================================== -->
+		<!-- Markers for path control points ====================================== -->
+		<!-- ====================================================================== -->
+		<rect x="23" y="358" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="73" y="258" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="123" y="358" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<text style="font-family:Helvetica;font-size:12;" x="105" y="320">M, C, c, Z</text>
+		<!-- ====================================================================== -->
+		<!-- Remembrance Ribbon using m, c & s ==================================== -->
+		<!-- ====================================================================== -->
+		<path id="Rem_Rib_mcs" style="fill:none;stroke:#000000;" d="   m 200 300      c  50 -40     50 -100     25 -100       s -25  60     25  100  "/>
+		<!-- ====================================================================== -->
+		<!-- Markers for path control points ====================================== -->
+		<!-- ====================================================================== -->
+		<rect x="198" y="298" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="223" y="198" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="248" y="298" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<text style="font-family:Helvetica;font-size:12;" x="165" y="240">m, c, s</text>
+		<!-- ====================================================================== -->
+		<!-- 90 degree arc using M & C ============================================ -->
+		<!-- ====================================================================== -->
+		<path id="Arc_MC" style="fill:#0000FF;stroke:#000000;" d="   M 320 160   C 380 150    420 190    410 250  "/>
+		<!-- ====================================================================== -->
+		<!-- Markers for path control points ====================================== -->
+		<!-- ====================================================================== -->
+		<rect x="318" y="158" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="408" y="248" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<text style="font-family:Helvetica;font-size:12;" x="320" y="210">M, C</text>
+		<!-- ====================================================================== -->
+		<!-- Circle using M, c, s, s, s & z ======================================= -->
+		<!-- ====================================================================== -->
+		<path id="Circle_Mcssz" style="fill:#FFFF00;stroke:#000000;" d="   M 360 280      c   0  20    -16  36    -36  36       s -36 -16    -36 -36       s  16 -36     36 -36    s  36  16     36  36   z  "/>
+		<!-- ====================================================================== -->
+		<!-- Markers for path control points ====================================== -->
+		<!-- ====================================================================== -->
+		<rect x="358" y="278" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="322" y="314" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="286" y="278" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="322" y="242" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<text style="font-family:Helvetica;font-size:12;" x="290" y="335">M, c, s, s, s, z</text>
+		<!-- ====================================================================== -->
+		<!-- Inverted horseshoe using m, c & z ==================================== -->
+		<!-- ====================================================================== -->
+		<path id="Horseshoe_Mcs" style="fill:#F0F0F0;stroke:#FF0000;" d="   m 340  425      c -40  -60     95 -100     80    0      z  "/>
+		<!-- ====================================================================== -->
+		<!-- Markers for path control points ====================================== -->
+		<!-- ====================================================================== -->
+		<rect x="338" y="423" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<rect x="418" y="423" width="4" height="4" style="fill:#4A83FF;stroke:none;"/>
+		<text style="font-family:Helvetica;font-size:12;" x="360" y="440">m, c, z</text>
+	</g>
+	<!--======================================================================-->
+	<!--Legend and frame:      Title, suite and SVG document serialization====-->
+	<!--======================================================================-->
+	<g id="test-legend" style="fill:black;font-family:Helvetica;font-size:10">
+		<rect x="10" y="390" width="275" height="50" style="fill:none;stroke:#000000"/>
+		<path style="fill:none;stroke:#000000" d="M10 405 h275 M205 405 v35 M10 426 h195 M205 422 h80"/>
+		<text x="25" y="401">Scalable Vector Graphics (SVG) Conformance Suite</text>
+		<a xlink:href="copyright-documents-19990405.html">
+			<text x="12" y="437" style="fill:blue">Copyright 2000 W3C. All Rights Reserved.</text>
+		</a>
+		<text style="font-size:12" x="35" y="420">path-curves-BE-02</text>
+		<text style="font-size:10" x="210" y="417">$Revision$</text>
+		<text style="font-size:10" x="210" y="435">Release 2.0</text>
+		<rect id="test-frame" x="1" y="1" width="448" height="448" style="fill:none; stroke:#000000"/>
+	</g>
+</svg>

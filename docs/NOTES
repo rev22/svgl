@@ -1,0 +1,49 @@
+algorithms:
+-----------
+
+optimization:
+	using display list:  the difficulty comes from the fact that an svg document is a graph: there can be multiple <use> for one element (eg. <circle> or <g>). Since the <use> elements can define inherited style attributes, we can't use a single display list per node because it would draw a node in only one way. However, in the case of an icon, it would be highly inefficient to have a display list per use. The solution is to check if the <use> element defines an inherited attribute, and if not, use a single display list. One other solution is to check if a group of shapes inside a <use> use inherited attributes. If not, a single display list can be used.
+	lod is not taken into account with this algorithm...
+	so far, since it may be hard to determine if a shape style depends on the style of its parents, we only provide an explicit compile() method to the user of the library: thus, it's up to him to take care of the fact that the drawing of a <use>'d shape may be false because it employs a single display list. The display list is automatically rebuild whenever a change of style/attributes/hierarchy has occured (using setDamaged()).
+
+optimization:
+------------
+
+- static
+	- state change (non-overlapping textured text) -> pure svg or z-value'd svg (images, pattern?)
+	- flatten
+	- make a texture with static sub-images
+	
+- dynamic
+	- pacer (degradation / refresh rate)
+		LOD
+		détermination à partir de la matrice courante ??? -> bounding box plutôt.
+		il doit y avoir qqch à faire en fonction du zoom pour les zui...
+		stroke=1 -> sie le scale < 1, rendre avec des lignes, plutôt qu'avec des quads
+	- viewport culling (text, zui portal)
+		using back-buffer and per-shape color
+		or glViewport and feedback...
+
+	- opacity
+	- gl list
+		construction automatique en fonction des changements possibles
+			par animation -> peut être fait facilement
+			par interaction -> peut être plus difficile
+		ou construction dynamique en fonction des changements effectués
+			pour chaque parent appel de invalidate(SVGElement*, hint) hint=transform, geometry, style...
+		en fonction des <use>
+			ex portal
+
+		gl list juste en dessous du changement...
+
+faire un switch particulier
+
+
+antialiasing
+------------
+
+uses the multisample_arb extension.
+we can'do use polygon antialiasing since it requires the use of a blending function which is different from the regular one.
+antialiasing is disabled when using textured text.
+so far, all stencil-based algorithm will not be anti-aliased... YES! it will be with multisample
+turn on POLYGON_SMOOTH when not translucent

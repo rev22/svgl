@@ -1,0 +1,53 @@
+required libraries:
+------------------
+freetype 2.x (http://www.freetype.org)
+png (http://www.libpng.org/pub/png)
+opengl
+mesa (especially OSMesa) is required for svg2raster(1) (http://www.mesa3d.org)
+GLU is required. We recommend to use SGI's implementation, available
+at http://oss.sgi.com/projects/ogl-sample/. Tip: you don't need to compile the GL implementation,
+so don't bother installing XFree sources. Just follow SGI instructions as if you have
+them, make World, and the libGLU.so should be here.
+glft (which comes along with svgl)
+
+procedure:
+---------
+O. build glft and make sure it works, but don't install it.
+1. decompress svgl.tgz. For example, in /home/zidane/src
+2. svgl can (must ? didn't test it) be compiled in a build directory, different from the src. This is the recommended way. For example /home/zidane/build/svgl.
+3. if configure in /home/zidane/src/svgl does not exist, create it by running ./build/make/bootstrap in /home/zidane/svgl
+4. cd into /home/zidane/build/svgl
+5. run /home/zidane/src/svgl/configure
+or something like:
+env "PATH=/home/zidane/build/glft:$PATH" ~/src/svgl/configure
+
+6. make scripts
+7. make
+
+additionaly you can:
+make lib (no contrib)
+
+download the svg tests suite, and try:
+make supertest
+
+there is a tutorial as well...
+
+there is no installation procedure so far: do not try 'make install'
+
+FAQ
+---
+
+1. There seems to be lacking headers
+svgl building procedure generates headers from the w3 idl in the directory gen/ in the build directiry. 
+check wether /home/zidane/build/svgl/gen exists, if .../gen/svgl and .../gen/src exist, and if the compiler flag point to this
+directory (-I/home/zidane/build/gen)
+You can regenerate headers with a "make scripts"
+
+2. What about antialiasing ?
+you have to open a suitable visual. With glut, pass GLUT_MULTISAMPLE to glutInitDisplayMode.
+
+
+bug reports and comments:
+------------------------
+conversy __at__ lri __dot__ fr
+http://www-ihm.lri.fr/~conversy/svgl

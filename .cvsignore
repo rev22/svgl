@@ -1,0 +1,11 @@
+.cleanupok
+aclocal.m4
+autom4te.cache
+bootstrap
+cleanup
+configure
+configure.in
+Makefile.in
+svgl-config.in
+tools
+
