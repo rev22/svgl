@@ -28,7 +28,7 @@ svgl::DisplayManager * displayManager=0;
 
 char svgdesc [] = "<?xml version='1.0' encoding='UTF-8'?>"
 "<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN' 'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>"
-"<svg width='450' height='450'>"
+"<svg width='450' height='450' xmlns:xlink='http://www.w3.org/1999/xlink'>"
 "<g id='view'>"
 "   <defs>"
 "      <g id='foo' stroke-width='3'>"

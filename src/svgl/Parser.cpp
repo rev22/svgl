@@ -74,110 +74,68 @@ namespace svgl {
   }
 
 
-  svg::SVGDocument*
-  Parser::parse(const char* url)
-  {
-    FILE * in  = fopen(url, "rb");
-    if (in == 0) {
-      std::cerr << "could not open file" __FL__;
-      return 0;
-    }
+	svg::SVGDocument *Parser::parseInputSource(sdom::InputSource *input) {
+		dom::DOMParser parser;
 
-    sdom::StdioInputSource input(in, unicode::String::createString(url));
-    dom::DOMParser parser;
-
-    try {
-      parser.parse(&input);
-    }
-    catch(dom::DOMException& e) {
-      std::cerr << "Error: " << e.what() << __FL__;
-      return 0;
-    }
-    catch(std::exception& ex) {
-      std::cerr << "Exception: " << ex.what() << __FL__;
-      return 0;
-    }
-    dom::Document * domdoc = parser.getDocument();
-    svg::SVGDocument * svgdoc = dynamic_cast<svg::SVGDocument *>(domdoc);
+		try {
+			parser.parse(input);
+		}
+		catch(dom::DOMException &e) {
+			std::cerr << "Error: " << e.what() << __FL__;
+			return 0;
+		}
+		catch(std::exception &e) {
+			std::cerr << "Exception: " << e.what() << __FL__;
+			return 0;
+		}
+		dom::Document *domdoc = parser.getDocument();
+		svg::SVGDocument *svgdoc = dynamic_cast< svg::SVGDocument * >(domdoc);
    
-    if(!svgdoc) {
-      std::cerr << "not an svg file" << __FL__;
-      std::cerr << DBGVAR(domdoc) << DBGVAR(svgdoc) << __FL__;
-      return 0;
-    }
+		if(!svgdoc) {
+			std::cerr << "not an svg file" << __FL__;
+			std::cerr << DBGVAR(domdoc) << DBGVAR(svgdoc) << __FL__;
+			return 0;
+		}
 
-    dom::Node * node = svgdoc->getFirstChild(); // should be doctype
-    svg::SVGSVGElement * svgroot = dynamic_cast<svg::SVGSVGElement *>(node);
+		dom::Node *node = svgdoc->getFirstChild(); // should be doctype
+		svg::SVGSVGElement *svgroot = dynamic_cast< svg::SVGSVGElement * >(node);
 
-    while(node && !svgroot) {
-      node=node->getNextSibling();
-      svgroot = dynamic_cast<svg::SVGSVGElement *>(node);
-    }
+		while(node && !svgroot) {
+			node = node->getNextSibling();
+			svgroot = dynamic_cast< svg::SVGSVGElement * >(node);
+		}
 
-    //std::cerr << DBGVAR(node) << DBGVAR(svgroot) << __FL__;
+		//std::cerr << DBGVAR(node) << DBGVAR(svgroot) << __FL__;
 
-    if(!svgroot) {
-      std::cerr << "not an svg file" << __FL__;
-      return 0;
-    }
+		if(!svgroot) {
+			std::cerr << "not an svg file" << __FL__;
+			return 0;
+		}
 
-    //svgdoc->getRootElement().setValue(svgroot);
-    svgroot->setOwnerAndViewPort(svgroot, svgroot);
-    svgdoc->updateStyle();
+		//svgdoc->getRootElement().setValue(svgroot);
+		svgroot->setOwnerAndViewPort(svgroot, svgroot);
+		svgdoc->updateStyle();
 
-    svgroot->registerUse(0);
+		svgroot->registerUse(0);
     
-    return svgdoc;
-  }
+		return svgdoc;
+	}
+	
+	
+	svg::SVGDocument *Parser::parse(const char *url) {
+		FILE * in  = fopen(url, "rb");
+		if (in == 0) {
+			std::cerr << "could not open file" __FL__;
+			return 0;
+		}
 
-  svg::SVGDocument*
-  Parser::parseFromString(unicode::String* svgdesc)
-  {
-    sdom::StringInputSource input(svgdesc);
-    dom::DOMParser parser;
+		sdom::StdioInputSource input(in, unicode::String::createString(url));
+		return parseInputSource(&input);
+	}
 
-    try {
-      parser.parse(&input);
-    }
-    catch(dom::DOMException& e) {
-      std::cerr << "Error: " << e.what() << __FL__;
-      return 0;
-    }
-    catch(std::exception& ex) {
-      std::cerr << "Exception: " << ex.what() << __FL__;
-      return 0;
-    }
-    dom::Document * domdoc = parser.getDocument();
-    svg::SVGDocument * svgdoc = dynamic_cast<svg::SVGDocument *>(domdoc);
-   
-    if(!svgdoc) {
-      std::cerr << "not an svg file" << __FL__;
-      std::cerr << DBGVAR(domdoc) << DBGVAR(svgdoc) << __FL__;
-      return 0;
-    }
-
-    dom::Node * node = svgdoc->getFirstChild(); // should be doctype
-    svg::SVGSVGElement * svgroot = dynamic_cast<svg::SVGSVGElement *>(node);
-
-    while(node && !svgroot) {
-      node=node->getNextSibling();
-      svgroot = dynamic_cast<svg::SVGSVGElement *>(node);
-    }
-
-    //std::cerr << DBGVAR(node) << DBGVAR(svgroot) << __FL__;
-
-    if(!svgroot) {
-      std::cerr << "not an svg file" << __FL__;
-      return 0;
-    }
-
-    //svgdoc->getRootElement().setValue(svgroot);
-    svgroot->setOwnerAndViewPort(svgroot, svgroot);
-    svgdoc->updateStyle();
-
-    svgroot->registerUse(0);
-    
-    return svgdoc;
-  }
+	svg::SVGDocument *Parser::parseFromString(unicode::String *svgdesc) {
+		sdom::StringInputSource input(svgdesc);
+		return parseInputSource(&input);
+	}
 
 }

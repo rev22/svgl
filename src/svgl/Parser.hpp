@@ -20,6 +20,7 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 #include <w3c/svg/String.hpp>
 //#include <w3c/svg/strings.hpp>
 
+#include <utils/InputSource.hpp>
 
 
 // #include <w3c/svg/length.hpp>
@@ -57,6 +58,9 @@ namespace svgl {
     };
 
     Parser();
+	 
+	 svg::SVGDocument * parseInputSource(sdom::InputSource *input);
+	 
     svg::SVGDocument * parse(const char* url);
     svg::SVGDocument * parseFromString(unicode::String*);
 
