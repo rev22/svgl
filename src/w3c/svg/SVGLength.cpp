@@ -20,6 +20,13 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 
 namespace svg {
 
+	
+void
+SVGLength::setValueAsString(const DOMString& s_ptr)
+{
+	dom_setValueAsString(s_ptr);
+}
+
 void
 SVGLength::dom_setValueAsString(const DOMString& s_ptr)
 {

@@ -276,8 +276,9 @@ namespace svg {
   {
     dom::Node *domchild = getFirstChild();
     if(domchild) {
+			// go to the last one since we traverse backward for animation stuff
       while(domchild->getNextSibling())
-	domchild=domchild->getNextSibling();
+				domchild=domchild->getNextSibling();
     }
     else
       return;
@@ -285,10 +286,11 @@ namespace svg {
     SVGElement *child = dynamic_cast<SVGElement*>(domchild);
     while (domchild) {
       if(child) {
-	svgl::AnimationInfo animinfonew = *animinfo;
-	animinfonew.element = this;
-	child->animationTraverse(&animinfonew);
+				svgl::AnimationInfo animinfonew = *animinfo;
+				animinfonew.element = this;
+				child->animationTraverse(&animinfonew);
       }
+			// go backward...
       domchild = domchild->getPreviousSibling();
       child = dynamic_cast<SVGElement*>(domchild);
     }

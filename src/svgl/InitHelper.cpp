@@ -15,6 +15,8 @@
 #include <w3c/css/CSSStyleDeclaration.hpp>
 #include <w3c/svg/strings.hpp>
 
+#include <svgl/debug.hpp>
+
 #if SVGL_USE_GC
 extern int GC_dont_gc;
 #endif
@@ -29,53 +31,49 @@ namespace svg {
   init_colors();
 }
 
-
 namespace svgl {
 
   InitHelper * InitHelper::_default = 0;
 
-  InitHelper *
-  InitHelper::get()
+	InitHelper *
+	InitHelper::get()
   {
-    if( !_default) {
-      _default = new InitHelper();
-    }
-    return _default;
+			if( !_default) {
+				_default = new InitHelper;
+			}
+			return _default;
   }
-
+	
+	
   InitHelper *
-  InitHelper::get(Time::Manager* t)
+	InitHelper::get
+#if 0
+		(Time::Manager* t, Animation::EventListener<Animation::RedisplayEvent>* redisplay, Animation::EventListener<Animation::BeginEvent>* begin, Animation::EventListener<Animation::EndEvent>* end)
+#else
+		(Time::Manager* t, Animation::RedisplayEventListener * redisplay, Animation::BeginEventListener* begin, Animation::EndEventListener * end)
+#endif
   {
     if( !_default) {
-      _default = new InitHelper(t);
-    }
-    return _default;
-  }
-
-  InitHelper *
-  InitHelper::get(Time::Manager* t, Animation::RedisplayListener* l)
-  {
-    if( !_default) {
-      _default = new InitHelper(t,l);
+      _default = new InitHelper(t, redisplay, begin, end);
     }
     return _default;
   }
 
   InitHelper::InitHelper()
-    : timeManager(new FakeTimeManager), redisplayListener(0)
+    : timeManager(new FakeTimeManager), redisplayListener(0), beginListener(0), endListener(0)
   {
     init();
   }
-
-  InitHelper::InitHelper(Time::Manager* t)
-    : timeManager(t), redisplayListener(0)
+	
+	InitHelper::InitHelper
+#if 0
+		(Time::Manager* t, Animation::EventListener<Animation::RedisplayEvent>* redisplay, Animation::EventListener<Animation::BeginEvent>* begin, Animation::EventListener<Animation::EndEvent>* end)
+#else
+		(Time::Manager* t, Animation::RedisplayEventListener * redisplay, Animation::BeginEventListener* begin, Animation::EndEventListener * end)
+#endif
+    : timeManager(t), redisplayListener(redisplay), beginListener(begin), endListener(end)
   {
-    init();
-  }
-
-  InitHelper::InitHelper(Time::Manager* t, Animation::RedisplayListener* l)
-    : timeManager(t), redisplayListener(l)
-  {
+		//std::cerr << DBGVAR(redisplayListener) << DBGVAR(beginListener) << DBGVAR(endListener) << __FL__;
     init();
   }
 
@@ -117,7 +115,12 @@ namespace svgl {
     animinfo = new AnimationInfo();
     animationManager = animinfo->animationManager = new svgl::Animation::Manager(timeManager, .01);
     animinfo->externalEntityManager = externalEntityManager;
-    animationManager->setRedisplayListener(redisplayListener);
+		if (redisplayListener)
+			animationManager->setRedisplayListener(redisplayListener);
+		if (beginListener)
+			animationManager->setBeginListener(beginListener);
+		if (endListener)
+			animationManager->setEndListener(endListener);
 
     displayManager = new DisplayManager();
     displayManager->init(context, glinfo);

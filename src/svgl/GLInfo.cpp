@@ -337,7 +337,7 @@ GLInfo::getCurrentScale() const
   GLInfo::setTessPathContext()
   {
     setTessContext();
-    typedef void (CALLBACK *fn_type)();
+    typedef void (CALLBACK *fn_type)(...);
     // gluTessCallback(gluTriangulator, GLU_TESS_VERTEX, reinterpret_cast<fn_type>(tessVertexPath));
     gluTessCallback(gluTriangulator, GLU_TESS_VERTEX, reinterpret_cast<fn_type>(glVertex2dv));
     gluTessCallback(gluTriangulator, GLU_TESS_COMBINE, reinterpret_cast<fn_type>(tessCombine));

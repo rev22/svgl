@@ -67,11 +67,13 @@ namespace svgl {
     static ExternalEntityManager* getDefault();
     static void setDefault(ExternalEntityManager*);
 
+		typedef std::map<dom::string, dom::Document*, string_less> Documents;
+		const Documents& getDocuments() const { return _documents; }
+		
   private:
     //dom::string _documentName;
     //dom::string _directoryName;
-
-    typedef std::map<dom::string, dom::Document*, string_less> Documents;
+    
     Documents _documents;
 
     struct DocumentInfo {

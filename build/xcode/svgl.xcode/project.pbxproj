@@ -113,8 +113,7 @@
 			sourceTree = "<group>";
 		};
 		08FB77AAFE841565C02AAC07 = {
-			fallbackIsa = PBXFileReference;
-			isa = PBXFrameworkReference;
+			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = Carbon.framework;
 			path = /System/Library/Frameworks/Carbon.framework;
@@ -166,8 +165,6 @@
 //4F3
 //4F4
 		4F0BB7EC011F40E904CA0E50 = {
-			buildRules = (
-			);
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				DEBUGGING_SYMBOLS = YES;
@@ -178,15 +175,13 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = "$(value) $(TARGET_BUILD_DIR)/local/include $(TARGET_BUILD_DIR)/local/include/w3c $(SRCROOT)/../../src $(SRCROOT)/../../src $(SRCROOT)/../../src/utils $(SRCROOT)/../../src/w3c /sw/include /sw/include/freetype2 $(TARGET_BUILD_DIR)/glft.framework/Headers";
 				OPTIMIZATION_CFLAGS = "-O0";
-				OTHER_LDFLAGS = "-L/sw/lib -lpng -lexpat";
+				OTHER_LDFLAGS = "-L/sw/lib -lpng -lexpat -lgc";
 				ZERO_LINK = YES;
 			};
 			isa = PBXBuildStyle;
 			name = Development;
 		};
 		4F0BB7ED011F40E904CA0E50 = {
-			buildRules = (
-			);
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -866,7 +861,7 @@
 		};
 		5B7E231705DFEFB100C14EA2 = {
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "test_clipping-Info.plist";
 			path = "/Users/conversy/src/svgl/build/xcode/test_clipping-Info.plist";
 			refType = 0;
@@ -5021,7 +5016,7 @@
 		};
 		5BB9D80605C822E60054944C = {
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "test_gllist-Info.plist";
 			path = "/Users/conversy/src/svgl/build/xcode/test_gllist-Info.plist";
 			refType = 0;
@@ -5180,7 +5175,7 @@
 		};
 		5BCCC8E605C6AF9E007EAD9D = {
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "04-useExternal-Info.plist";
 			path = "../../../../src/svgl/build/xcode/04-useExternal-Info.plist";
 			refType = 2;
@@ -5381,7 +5376,7 @@
 		};
 		5BEE655805C06CA0005D50D4 = {
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "svglViewer-Info.plist";
 			path = "../../../../src/svgl/build/xcode/svglViewer-Info.plist";
 			refType = 2;
@@ -5675,7 +5670,7 @@
 			);
 			isa = PBXGroup;
 			name = svg;
-			path = local/include/svg;
+			path = local/include/w3c/svg;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -7129,7 +7124,7 @@
 		};
 		5BEEAA1105C586130014DF78 = {
 			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
+			lastKnownFileType = text.xml;
 			name = "03-picking-Info.plist";
 			path = "../../../../src/svgl/build/xcode/03-picking-Info.plist";
 			refType = 2;

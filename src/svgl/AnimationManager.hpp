@@ -21,7 +21,7 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 #include <vector>
 //#include <queue>
 #include <map>
-
+#include <svgl/debug.hpp>
 
 // timeval
 #ifdef WIN32
@@ -55,18 +55,41 @@ namespace svgl {
     };
 
     struct Event {
-    };
-    
-    struct RedisplayEvent : Event {
-    };
-    
-    struct BeginEvent : Event {
-    };
-    
-    struct RedisplayListener {
-      virtual void doit(const RedisplayEvent& e)=0;
+protected:
+			Event() {}
     };
 
+    struct BeginEvent : Event {
+      svg::SVGAnimationElement * animationElement;
+    };
+		
+    struct EndEvent : Event {
+      svg::SVGAnimationElement * animationElement;
+    };
+		
+    struct RedisplayEvent : Event {
+    };
+
+#if 0
+		template <typename EVENT>
+    struct EventListener {
+      virtual void doit(const EVENT& e) = 0;
+    };
+#endif
+		
+    struct BeginEventListener {
+      virtual void doit(const BeginEvent& e) = 0;
+			virtual ~BeginEventListener() {}
+    };
+    struct EndEventListener {
+      virtual void doit(const EndEvent& e) = 0;
+			virtual ~EndEventListener() {}
+    };
+    struct RedisplayEventListener {
+      virtual void doit(const RedisplayEvent& e) = 0;
+			virtual ~RedisplayEventListener() {}
+    };
+		
     class Manager : public svgl::Time::Timer {
     public:
       Manager(Time::Manager* timeManager, float precision);
@@ -79,7 +102,7 @@ namespace svgl {
       void stop();
       void pause();
       void continue_();
-
+			void testRedisplay();
       // Timer interface
       void doit(const Time::Unit& actualtime);
 
@@ -126,12 +149,22 @@ namespace svgl {
 
       void schedule(TimeInfo*);
       void activate(TimeInfo*);
+			
 
     public:
-      void setRedisplayListener(RedisplayListener * l) { _redisplayListener = l; }
-
+#if 0
+      void setRedisplayListener(EventListener<RedisplayEvent> * l) { _redisplayListener = l; }
+      void setBeginListener(EventListener<BeginEvent> * l) { _beginListener = l; }
+      void setEndListener(EventListener<EndEvent> * l) { _endListener = l; }
+#else
+      void setRedisplayListener(RedisplayEventListener * l) { _redisplayListener = l; }
+      void setBeginListener(BeginEventListener * l) { _beginListener = l; }
+      void setEndListener(EndEventListener * l) { _endListener = l; }			
+#endif
     private:
-      RedisplayListener * _redisplayListener;
+			RedisplayEventListener * _redisplayListener;
+			BeginEventListener * _beginListener;
+			EndEventListener * _endListener;
     };
 
   }

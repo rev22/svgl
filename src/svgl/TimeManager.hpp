@@ -23,7 +23,7 @@ namespace svgl {
 
   namespace Time {
 
-    typedef float Unit;
+    typedef float Unit; // in seconds
 
     class Manager;
     class Timer;
@@ -37,17 +37,19 @@ namespace svgl {
       };
       struct TimerAlreadyScheduled : exc {
       };
+			struct TimerListEmpty : exc {};
 
       void after(Timer* timer, Unit) throw(TimerAlreadyScheduled);
       void cancel(Timer* timer);
       void timeElapsed(Unit);
 
-    protected:
+    //protected:
       virtual void firstTimerHasChanged()=0;
-      virtual void reschedule()=0;
+      virtual void reschedule();
 
       typedef std::list<Timer*> Timers;
       const Timers& getTimers() const { return _timers; }
+      Unit getFirstDelta() const;// throw(TimerListEmpty);
 
     private:
       Timers _timers;

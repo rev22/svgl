@@ -22,12 +22,16 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 #include <svgl/debug.hpp>
 #include <svgl/getattr.hpp>
 
+#include <cassert>
+
 namespace svg {
 
   void
   SVGAnimationElement::animationTraverse(svgl::AnimationInfo* animinfo)
   {
     _elementToAnimate = animinfo->element;
+		//_elementToAnimate = dynamic_cast<SVGElement*>(getParentNode());
+		assert(_elementToAnimate);
 
     // -1 -> special value for 'indefinite', the default
     _repeatCount = -1;
@@ -35,21 +39,21 @@ namespace svg {
     unicode::String& repeatstr = *repeatstr_ptr;
     if(repeatstr_ptr && repeatstr.getLength()) {
       if(unicode::get_float(repeatstr, &_repeatCount)) {
-	if(_repeatCount<0) {
-	  std::cerr << "attribute 'repeatCount' is invalid" __FL__;
-	  return;
-	}
+				if(_repeatCount<0) {
+					std::cerr << "attribute 'repeatCount' is invalid" __FL__;
+					return;
+				}
       }
       else {
-	static unicode::String& indefinite_string = *unicode::String::internString("indefinite");
-	if(repeatstr!=indefinite_string) {
-	  std::cerr << "attribute 'repeatCount' is invalid" __FL__;
-	  return;
-	}
+				static unicode::String& indefinite_string = *unicode::String::internString("indefinite");
+				if(repeatstr!=indefinite_string) {
+					std::cerr << "attribute 'repeatCount' is invalid" __FL__;
+					return;
+				}
       }
     }
-
-    _repeatCounter=_repeatCount;
+		
+		_repeatCounter=_repeatCount;
 
     animinfo->animationManager->subscribe(this);
   }
@@ -80,13 +84,13 @@ namespace svg {
 
     if(_repeatCounter>0.01) {
       _repeatCounter-=1;
-      if(_repeatCounter>1) {
-	restart=true;
+      if(_repeatCounter>=1) {
+				restart=true;
       }
       else {
-	if(_repeatCounter>0.01) {
-	  std::cerr << "fractional repeat of animation is not handled" << __FL__;
-	}
+				if(_repeatCounter>0.01) {
+					std::cerr << "fractional repeat of animation is not handled" << DBGVAR(_repeatCounter) << __FL__;
+				}
       }
     }
     else {
@@ -100,6 +104,7 @@ namespace svg {
   void
   SVGAnimationElement::reset()
   {
+		_repeatCounter=_repeatCount;
   }
 
 float

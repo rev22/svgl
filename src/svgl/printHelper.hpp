@@ -127,7 +127,7 @@ operator << (std::ostream& out, const svg::SVGList<svg::SVGTransform*>& a)
 	// avoid printing a trailing whitespace
   int size = a.numberOfItems();
   if (size>1) {
-		for(unsigned int i = 0; i<size-1; ++i) {
+		for(int i = 0; i<size-1; ++i) {
 			//std::cerr << i << std::endl;
 			a.getItem(i)->print(out);
 			out << " ";

@@ -882,7 +882,7 @@ display()
   }
 }
 
-struct GlutRedisplayListener : svgl::Animation::RedisplayListener {
+struct GlutRedisplayListener : svgl::Animation::RedisplayEventListener {
   virtual void doit(const svgl::Animation::RedisplayEvent&) { glutPostRedisplay(); }
 };
 

@@ -298,7 +298,7 @@ namespace svg {
 			css::CSSStyle::LengthType strokeDashoffset = style.getStrokeDashoffset();
 			float dashOffset = svglContext->computeWidthLength(strokeDashoffset);
 			
-			//std::cerr << DBGVAR(dashOffset) << __FL__;
+			//std::cerr << DBGVAR(strokeDasharray.size()) << __FL__;
 			
 			if(!strokeDasharray.empty()) {
 				shape_type::dash_type * pdash = new shape_type::dash_type(*pcontour);
@@ -309,7 +309,13 @@ namespace svg {
 						++it) {
 					double a,b;
 					a = *it++;
-					b = *it;
+					if (it==strokeDasharray.end()) {
+						b = a;
+						dash.add_dash(a,b);
+						break;
+					}
+					else
+						b = *it;
 					dash.add_dash(a,b);
 				}
 				dash.dash_start(dashOffset);
