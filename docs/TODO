@@ -1,0 +1,10 @@
+CLEAN IT UP !!
+      - split file
+      - change signatures
+      - check if it's still compiling with C      
+
+(autoscale, bboxautoscale) for single char
+
+* GLFT_FONTDIR and GLFT_CACHEDIR used in
+  FontManager::getDefaultManager should be defined by the configure
+  script

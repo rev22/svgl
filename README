@@ -1,0 +1,28 @@
+glft is a library that displays truetype fonts with OpenGL.
+It uses vector fonts (aa with FSAA) and GL_ALPHA textures (AA using freetype engine).
+it can automatically change the font size to the apparent size (autoscale).
+
+author
+Stephane Conversy, conversy@enac.fr, http://www.tls.cena.fr/~conversy
+Nicolas Roussel
+copyright (c) 1999-2004
+
+license: gnu LGPL
+see licence.txt
+
+Credits: important contributions were made by
+Renaud Blanch
+Jean-Rene Courtois
+
+build:
+mkdir ~/build/glft
+cd ~/build/glft
+~/src/glft/build/automale/bootstrap
+./configure
+make
+
+test:
+env GLFT_FONTDIR=/my/path/to/truetype/fonts demos/simple
+
+install:
+make install
