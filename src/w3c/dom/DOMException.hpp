@@ -111,7 +111,7 @@ public:
      * object.
      * @since DOM Level 2
      */
-      INVALID_ACCESS_ERR        = 15,
+      INVALID_ACCESS_ERR        = 15
     };
 
     DOMException(ExceptionCode c, unicode::String * message = 0) {

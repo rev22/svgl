@@ -115,7 +115,7 @@ public:
     /**
      * The node is a <code>Notation</code>.
      */
-      NOTATION_NODE             = 12,
+      NOTATION_NODE             = 12
     };
 
     /**
@@ -435,7 +435,7 @@ protected:
 	SPECIFIED	= 8,
 	SETVALUE	= 16,
 	IGNORABLEWS	= 32,
-	ID		= 64,
+	ID		= 64
     };
 public:
     virtual void	setOwnerDocument(Document * doc);
