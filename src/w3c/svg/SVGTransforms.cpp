@@ -35,8 +35,8 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
       throw WrongNumberOfArguments();											\
     }
 
-#if 0
-static
+#if 1
+//static
 std::ostream&
 operator<< (std::ostream& out, const svg::SVGMatrix& m)
 {

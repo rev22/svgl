@@ -124,11 +124,17 @@ inline
 std::ostream&
 operator << (std::ostream& out, const svg::SVGList<svg::SVGTransform*>& a)
 {
-  for(unsigned int i = 0; i<(a.numberOfItems()-1); ++i) {
-    a.getItem(i)->print(out);
-    out << " ";
-  }
-  a.getItem(a.numberOfItems()-1)->print(out);
+	// avoid printing a trailing whitespace
+  int size = a.numberOfItems();
+  if (size>1) {
+		for(unsigned int i = 0; i<size-1; ++i) {
+			//std::cerr << i << std::endl;
+			a.getItem(i)->print(out);
+			out << " ";
+		}
+	}
+	if (size>0)
+		a.getItem(size-1)->print(out);
   return out;
 }
 

@@ -315,7 +315,7 @@ GLInfo::getCurrentScale() const
   void
   GLInfo::setTessContext()
   {
-    typedef void (CALLBACK *fn_type)();
+    typedef GLvoid (CALLBACK *fn_type)(...);
     gluTessCallback(gluTriangulator, GLU_TESS_BEGIN, reinterpret_cast<fn_type>(tessBegin) );
     gluTessCallback(gluTriangulator, GLU_TESS_END, reinterpret_cast<fn_type>(tessEnd));
     gluTessCallback(gluTriangulator, GLU_TESS_ERROR, reinterpret_cast<fn_type>(tessError));
@@ -328,7 +328,7 @@ GLInfo::getCurrentScale() const
   GLInfo::setTessPolygonContext()
   {
     setTessContext();
-    typedef void (CALLBACK *fn_type)();
+    typedef void (CALLBACK *fn_type)(...);
     gluTessCallback(gluTriangulator, GLU_TESS_VERTEX, reinterpret_cast<fn_type>(tessVertexPolygon));
     gluTessCallback(gluTriangulator, GLU_TESS_COMBINE, reinterpret_cast<fn_type>(tessVertexCombine));				
   }

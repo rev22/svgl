@@ -200,14 +200,10 @@ namespace svg {
   {
     dom::Node *domchild = getFirstChild();
     SVGElement *child = dynamic_cast<SVGElement*>(domchild);
+
     while (domchild) {
       if(child) {
-#if 1
 	child->glTraverse(svglContext, glinfo);
-#else
-	svgl::GLInfo glinfonew = *glinfo;
-	child->glTraverse(svglContext, &glinfonew);
-#endif
       }
       domchild = domchild->getNextSibling();
       child = dynamic_cast<SVGElement*>(domchild);
@@ -239,12 +235,7 @@ namespace svg {
     SVGElement *child = dynamic_cast<SVGElement*>(domchild);
     while (domchild) {
       if(child) {
-#if 1
 	child->glTraverseBoundingBox(svglContext, glinfo);
-#else
-	svgl::GLInfo glinfonew = *glinfo;
-	child->glTraverseBoundingBox(svglContext, &glinfonew);
-#endif
       }
       domchild = domchild->getNextSibling();
       child = dynamic_cast<SVGElement*>(domchild);
@@ -265,12 +256,7 @@ namespace svg {
     SVGElement *child = dynamic_cast<SVGElement*>(domchild);
     while (domchild) {
       if(child) {
-#if 1
 	child->pickTraverse(svglContext, glinfo);
-#else
-	svgl::GLInfo glinfonew = *glinfo;
-	child->pickTraverse(svglContext, &glinfonew);
-#endif
       }
       domchild = domchild->getNextSibling();
       child = dynamic_cast<SVGElement*>(domchild);

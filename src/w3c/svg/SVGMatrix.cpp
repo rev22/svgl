@@ -24,10 +24,10 @@ SVGMatrix::multiply ( const SVGMatrix& secondMatrix )
     SVGMatrix * res = new SVGMatrix;
     res->getA() = getA()*secondMatrix.getA()+getB()*secondMatrix.getD();
     res->getB() = getA()*secondMatrix.getB()+getB()*secondMatrix.getE();
-    res->getC() = getA()*secondMatrix.getC()+getB()*secondMatrix.getF();
+    res->getC() = getA()*secondMatrix.getC()+getB()*secondMatrix.getF() + getC();
     res->getD() = getD()*secondMatrix.getA()+getE()*secondMatrix.getD();
     res->getE() = getD()*secondMatrix.getB()+getE()*secondMatrix.getE();
-    res->getF() = getD()*secondMatrix.getC()+getE()*secondMatrix.getF();
+    res->getF() = getD()*secondMatrix.getC()+getE()*secondMatrix.getF() + getF();
     return res;
 }
 
@@ -37,7 +37,9 @@ SVGMatrix::inverse (  )
     double ae_bd = getA()*getE()-getB()*getD();
     if( (ae_bd)==0 || (getA()==0))
         return 0;
-    ae_bd = 1/(ae_bd);
+    //ae_bd = 1/(ae_bd);
+		
+#if 0		
     double fa_dcDIVae_bd = (getF()*getA()-getD()*getC())*ae_bd;
 
     SVGMatrix* res = new SVGMatrix;
@@ -47,7 +49,18 @@ SVGMatrix::inverse (  )
     res->getD() = -getD()*ae_bd;
     res->getE() = getA()*ae_bd;
     res->getF() = -fa_dcDIVae_bd;
-    
+#else
+		double fa_dc = getF()*getA()-getD()*getC();
+		SVGMatrix* res = new SVGMatrix;
+    res->getA() = getE()/ae_bd;
+    res->getB() = -getB()/ae_bd;
+    res->getC() = -(getC()*getE() + getB()*getF())/ae_bd; 
+    res->getD() = -getD()/ae_bd;
+    res->getE() = getA()/ae_bd;
+    res->getF() = -fa_dc/ae_bd;
+		
+		
+#endif
     return res;
 }
 

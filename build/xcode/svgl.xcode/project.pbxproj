@@ -56,7 +56,6 @@
 		};
 		0867D691FE84028FC02AAC07 = {
 			children = (
-				C8541F1306775BC0002D0FDA,
 				08FB77ACFE841707C02AAC07,
 				089C1665FE841158C02AAC07,
 				0867D69AFE84028FC02AAC07,
@@ -177,7 +176,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_GENERATE_PROFILING_CODE = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				HEADER_SEARCH_PATHS = "$(value) $(TARGET_BUILD_DIR)/local/include $(SRCROOT)/../../src $(SRCROOT)/../../src/w3c $(SRCROOT)/../../src/utils /sw/include /sw/include/freetype2 $(TARGET_BUILD_DIR)/glft.framework/Headers";
+				HEADER_SEARCH_PATHS = "$(value) $(TARGET_BUILD_DIR)/local/include $(TARGET_BUILD_DIR)/local/include/w3c $(SRCROOT)/../../src $(SRCROOT)/../../src $(SRCROOT)/../../src/utils $(SRCROOT)/../../src/w3c /sw/include /sw/include/freetype2 $(TARGET_BUILD_DIR)/glft.framework/Headers";
 				OPTIMIZATION_CFLAGS = "-O0";
 				OTHER_LDFLAGS = "-L/sw/lib -lpng -lexpat";
 				ZERO_LINK = YES;
@@ -206,6 +205,34 @@
 //5B2
 //5B3
 //5B4
+		5B0B133506A435700066731C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = IstreamInputSource.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		5B0B133606A435700066731C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.h;
+			path = IstreamInputSource.hpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		5B0B133706A435700066731C = {
+			fileRef = 5B0B133506A435700066731C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		5B0B133806A435700066731C = {
+			fileRef = 5B0B133606A435700066731C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		5B29B4470614A6A5001C2701 = {
 			children = (
 				5B29B4480614A6A5001C2701,
@@ -1189,8 +1216,6 @@
 		5B908E10059049A8001E3D32 = {
 			children = (
 				5B818E20061B03C9004B0B60,
-				5B908E11059049A8001E3D32,
-				5B908E14059049A8001E3D32,
 				5B908E18059049A8001E3D32,
 				5B908E5C059049A8001E3D32,
 				5B908E72059049A8001E3D32,
@@ -1200,58 +1225,6 @@
 			path = ../../src;
 			refType = 2;
 			sourceTree = SOURCE_ROOT;
-		};
-		5B908E11059049A8001E3D32 = {
-			children = (
-				5B908E12059049A8001E3D32,
-				5B908E13059049A8001E3D32,
-			);
-			isa = PBXGroup;
-			path = dyglc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		5B908E12059049A8001E3D32 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			path = block.cpp;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		5B908E13059049A8001E3D32 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.h;
-			path = block.hpp;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		5B908E14059049A8001E3D32 = {
-			children = (
-				5B908E15059049A8001E3D32,
-				5B908E16059049A8001E3D32,
-			);
-			isa = PBXGroup;
-			path = GL;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		5B908E15059049A8001E3D32 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			path = glcc.h;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		5B908E16059049A8001E3D32 = {
-			fileEncoding = 30;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			path = glext.h;
-			refType = 4;
-			sourceTree = "<group>";
 		};
 		5B908E18059049A8001E3D32 = {
 			children = (
@@ -1880,6 +1853,8 @@
 				5B908E61059049A8001E3D32,
 				5B908E62059049A8001E3D32,
 				5B908E63059049A8001E3D32,
+				5B0B133506A435700066731C,
+				5B0B133606A435700066731C,
 				5B908E64059049A8001E3D32,
 				5B908E65059049A8001E3D32,
 				5B908E66059049A8001E3D32,
@@ -3461,30 +3436,6 @@
 			path = SVGUseElement.cpp;
 			refType = 4;
 			sourceTree = "<group>";
-		};
-		5B908F0D059049A9001E3D32 = {
-			fileRef = 5B908E12059049A8001E3D32;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		5B908F0E059049A9001E3D32 = {
-			fileRef = 5B908E13059049A8001E3D32;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		5B908F0F059049A9001E3D32 = {
-			fileRef = 5B908E15059049A8001E3D32;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		5B908F10059049A9001E3D32 = {
-			fileRef = 5B908E16059049A8001E3D32;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		5B908F11059049A9001E3D32 = {
 			fileRef = 5B908E19059049A8001E3D32;
@@ -7265,9 +7216,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D07F2BE0486CC7A007CD1D0,
-				5B908F0E059049A9001E3D32,
-				5B908F0F059049A9001E3D32,
-				5B908F10059049A9001E3D32,
 				5B908F11059049A9001E3D32,
 				5B908F12059049A9001E3D32,
 				5B908F13059049A9001E3D32,
@@ -7401,6 +7349,7 @@
 				5B761BFB0624025500E22DBC,
 				5BDBE5CA062425EC00774698,
 				5B69669C0637BCB800420D48,
+				5B0B133806A435700066731C,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7417,51 +7366,6 @@
 				8D07F2C00486CC7A007CD1D0,
 				5B908F22059049A9001E3D32,
 				5B908FA9059049A9001E3D32,
-				C8541F4106775BC0002D0FDA,
-				C8541F4206775BC0002D0FDA,
-				C8541F4306775BC0002D0FDA,
-				C8541F4406775BC0002D0FDA,
-				C8541F4506775BC0002D0FDA,
-				C8541F4606775BC0002D0FDA,
-				C8541F4706775BC0002D0FDA,
-				C8541F4806775BC0002D0FDA,
-				C8541F4906775BC0002D0FDA,
-				C8541F4A06775BC0002D0FDA,
-				C8541F4B06775BC0002D0FDA,
-				C8541F4C06775BC0002D0FDA,
-				C8541F4D06775BC0002D0FDA,
-				C8541F4E06775BC0002D0FDA,
-				C8541F4F06775BC0002D0FDA,
-				C8541F5006775BC0002D0FDA,
-				C8541F5106775BC0002D0FDA,
-				C8541F5206775BC0002D0FDA,
-				C8541F5306775BC0002D0FDA,
-				C8541F5406775BC0002D0FDA,
-				C8541F5506775BC0002D0FDA,
-				C8541F5606775BC0002D0FDA,
-				C8541F5706775BC0002D0FDA,
-				C8541F5806775BC0002D0FDA,
-				C8541F5906775BC0002D0FDA,
-				C8541F5A06775BC0002D0FDA,
-				C8541F5B06775BC0002D0FDA,
-				C8541F5C06775BC0002D0FDA,
-				C8541F5D06775BC0002D0FDA,
-				C8541F5E06775BC0002D0FDA,
-				C8541F5F06775BC0002D0FDA,
-				C8541F6006775BC0002D0FDA,
-				C8541F6106775BC0002D0FDA,
-				C8541F6206775BC0002D0FDA,
-				C8541F6306775BC0002D0FDA,
-				C8541F6406775BC0002D0FDA,
-				C8541F6506775BC0002D0FDA,
-				C8541F6606775BC0002D0FDA,
-				C8541F6706775BC0002D0FDA,
-				C8541F6806775BC0002D0FDA,
-				C8541F6906775BC0002D0FDA,
-				C8541F6A06775BC0002D0FDA,
-				C8541F6B06775BC0002D0FDA,
-				C8541F6C06775BC0002D0FDA,
-				C8541F6D06775BC0002D0FDA,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7475,7 +7379,6 @@
 		8D07F2C10486CC7A007CD1D0 = {
 			buildActionMask = 2147483647;
 			files = (
-				5B908F0D059049A9001E3D32,
 				5B908F15059049A9001E3D32,
 				5B908F18059049A9001E3D32,
 				5B908F1A059049A9001E3D32,
@@ -7606,6 +7509,7 @@
 				5B818E60061B0443004B0B60,
 				5BDBE5C9062425EC00774698,
 				5B6966B70637BD0A00420D48,
+				5B0B133706A435700066731C,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7641,684 +7545,6 @@
 			path = svgl.framework;
 			refType = 3;
 			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-//8D0
-//8D1
-//8D2
-//8D3
-//8D4
-//C80
-//C81
-//C82
-//C83
-//C84
-		C8541F1306775BC0002D0FDA = {
-			children = (
-				C8541F1406775BC0002D0FDA,
-				C8541F1506775BC0002D0FDA,
-				C8541F1606775BC0002D0FDA,
-				C8541F1706775BC0002D0FDA,
-				C8541F1806775BC0002D0FDA,
-				C8541F1906775BC0002D0FDA,
-				C8541F1A06775BC0002D0FDA,
-				C8541F1B06775BC0002D0FDA,
-				C8541F1C06775BC0002D0FDA,
-				C8541F1D06775BC0002D0FDA,
-				C8541F1E06775BC0002D0FDA,
-				C8541F1F06775BC0002D0FDA,
-				C8541F2006775BC0002D0FDA,
-				C8541F2106775BC0002D0FDA,
-				C8541F2206775BC0002D0FDA,
-				C8541F2306775BC0002D0FDA,
-				C8541F2406775BC0002D0FDA,
-				C8541F2506775BC0002D0FDA,
-				C8541F2606775BC0002D0FDA,
-				C8541F2706775BC0002D0FDA,
-				C8541F2806775BC0002D0FDA,
-				C8541F2906775BC0002D0FDA,
-				C8541F2A06775BC0002D0FDA,
-				C8541F2B06775BC0002D0FDA,
-				C8541F2C06775BC0002D0FDA,
-				C8541F2D06775BC0002D0FDA,
-				C8541F2E06775BC0002D0FDA,
-				C8541F2F06775BC0002D0FDA,
-				C8541F3006775BC0002D0FDA,
-				C8541F3106775BC0002D0FDA,
-				C8541F3206775BC0002D0FDA,
-				C8541F3306775BC0002D0FDA,
-				C8541F3406775BC0002D0FDA,
-				C8541F3506775BC0002D0FDA,
-				C8541F3606775BC0002D0FDA,
-				C8541F3706775BC0002D0FDA,
-				C8541F3806775BC0002D0FDA,
-				C8541F3906775BC0002D0FDA,
-				C8541F3A06775BC0002D0FDA,
-				C8541F3B06775BC0002D0FDA,
-				C8541F3C06775BC0002D0FDA,
-				C8541F3D06775BC0002D0FDA,
-				C8541F3E06775BC0002D0FDA,
-				C8541F3F06775BC0002D0FDA,
-				C8541F4006775BC0002D0FDA,
-			);
-			isa = PBXGroup;
-			name = scripts;
-			path = /Users/blanch/src/svgl/scripts;
-			refType = 0;
-			sourceTree = "<absolute>";
-		};
-		C8541F1406775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text;
-			path = .cvsignore;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F1506775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = config.macosx.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F1606775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text;
-			path = config.py.in;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F1706775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = cplusplus.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F1806775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = cplusplus.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F1906775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = cppHeader.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F1A06775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = cppHeader.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F1B06775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = cppName.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F1C06775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = cppName.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F1D06775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = enum_map.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F1E06775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = enum_map.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F1F06775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = genAttributeParser.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2006775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = GenFile.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2106775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = GenFile.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2206775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = genFromIdl.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2306775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = genSvgElement.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2406775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = idl.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2506775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = idl.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2606775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = interfaces.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2706775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = interfaces.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2806775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = make_cpp_string_name.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2906775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = make_cpp_string_name.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2A06775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = makeAnimated.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2B06775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = makeAnimated.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2C06775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = makeBasicTypes.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2D06775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = makeBasicTypes.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2E06775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = makeColors.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F2F06775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = makeList.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3006775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = makeList.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3106775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = makeParseAttribute.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3206775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = mapAttributeType.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3306775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = mapAttributeType.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3406775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = mapDtdIdl.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3506775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = mapDtdIdl.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3606775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = NonRegression.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3706775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = parse_attr.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3806775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = parse_attr.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3906775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = parse_dtd.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3A06775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = parse_dtd.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3B06775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = parse_idl.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3C06775BC0002D0FDA = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			path = parse_idl.pyc;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3D06775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = parse_idl2.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3E06775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = pythonv.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F3F06775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = test_suite.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F4006775BC0002D0FDA = {
-			fileEncoding = 5;
-			isa = PBXFileReference;
-			lastKnownFileType = text.script.python;
-			path = updateSvglContext.py;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		C8541F4106775BC0002D0FDA = {
-			fileRef = C8541F1406775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4206775BC0002D0FDA = {
-			fileRef = C8541F1506775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4306775BC0002D0FDA = {
-			fileRef = C8541F1606775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4406775BC0002D0FDA = {
-			fileRef = C8541F1706775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4506775BC0002D0FDA = {
-			fileRef = C8541F1806775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4606775BC0002D0FDA = {
-			fileRef = C8541F1906775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4706775BC0002D0FDA = {
-			fileRef = C8541F1A06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4806775BC0002D0FDA = {
-			fileRef = C8541F1B06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4906775BC0002D0FDA = {
-			fileRef = C8541F1C06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4A06775BC0002D0FDA = {
-			fileRef = C8541F1D06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4B06775BC0002D0FDA = {
-			fileRef = C8541F1E06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4C06775BC0002D0FDA = {
-			fileRef = C8541F1F06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4D06775BC0002D0FDA = {
-			fileRef = C8541F2006775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4E06775BC0002D0FDA = {
-			fileRef = C8541F2106775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F4F06775BC0002D0FDA = {
-			fileRef = C8541F2206775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5006775BC0002D0FDA = {
-			fileRef = C8541F2306775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5106775BC0002D0FDA = {
-			fileRef = C8541F2406775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5206775BC0002D0FDA = {
-			fileRef = C8541F2506775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5306775BC0002D0FDA = {
-			fileRef = C8541F2606775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5406775BC0002D0FDA = {
-			fileRef = C8541F2706775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5506775BC0002D0FDA = {
-			fileRef = C8541F2806775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5606775BC0002D0FDA = {
-			fileRef = C8541F2906775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5706775BC0002D0FDA = {
-			fileRef = C8541F2A06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5806775BC0002D0FDA = {
-			fileRef = C8541F2B06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5906775BC0002D0FDA = {
-			fileRef = C8541F2C06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5A06775BC0002D0FDA = {
-			fileRef = C8541F2D06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5B06775BC0002D0FDA = {
-			fileRef = C8541F2E06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5C06775BC0002D0FDA = {
-			fileRef = C8541F2F06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5D06775BC0002D0FDA = {
-			fileRef = C8541F3006775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5E06775BC0002D0FDA = {
-			fileRef = C8541F3106775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F5F06775BC0002D0FDA = {
-			fileRef = C8541F3206775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6006775BC0002D0FDA = {
-			fileRef = C8541F3306775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6106775BC0002D0FDA = {
-			fileRef = C8541F3406775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6206775BC0002D0FDA = {
-			fileRef = C8541F3506775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6306775BC0002D0FDA = {
-			fileRef = C8541F3606775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6406775BC0002D0FDA = {
-			fileRef = C8541F3706775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6506775BC0002D0FDA = {
-			fileRef = C8541F3806775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6606775BC0002D0FDA = {
-			fileRef = C8541F3906775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6706775BC0002D0FDA = {
-			fileRef = C8541F3A06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6806775BC0002D0FDA = {
-			fileRef = C8541F3B06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6906775BC0002D0FDA = {
-			fileRef = C8541F3C06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6A06775BC0002D0FDA = {
-			fileRef = C8541F3D06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6B06775BC0002D0FDA = {
-			fileRef = C8541F3E06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6C06775BC0002D0FDA = {
-			fileRef = C8541F3F06775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		C8541F6D06775BC0002D0FDA = {
-			fileRef = C8541F4006775BC0002D0FDA;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 	};
 	rootObject = 0867D690FE84028FC02AAC07;

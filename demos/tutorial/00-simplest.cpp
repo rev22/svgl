@@ -45,10 +45,9 @@ createSampleDoc()
   // order independant
   //rect->scale(.5);
   //rect->rotate(20);
-  rect->translate(x,y);
+  //rect->translate(x,y);
 
   thesvgelt->appendChild(rect);
-	
   glutReshapeWindow(450, 450);
   return doc;
 }
