@@ -3,6 +3,7 @@
 noinst_LTLIBRARIES = libsrcutils.la
 libsrcutils_la_SOURCES = EntityResolver.cpp\
 			FileInputSource.cpp\
+			IstreamInputSource.cpp\
 			StdioInputSource.cpp\
 			String.cpp\
 			StringBuffer.cpp\
@@ -17,6 +18,7 @@ pkginclude_HEADERS = \
 	InputSource.hpp\
 	List.hpp\
 	StdioInputSource.hpp\
+	IstreamInputSource.hpp\
 	String.hpp\
 	StringBuffer.hpp\
 	StringImpl.hpp\

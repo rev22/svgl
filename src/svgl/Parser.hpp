@@ -28,6 +28,7 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 // #include <w3c/svg/group.hpp>
 // #include <w3c/svg/rect.hpp>
 
+#include <istream>
 #include <iostream>
 
 class DOM_Node;
@@ -63,6 +64,7 @@ namespace svgl {
 	 
     svg::SVGDocument * parse(const char* url);
     svg::SVGDocument * parseFromString(unicode::String*);
+	 svg::SVGDocument * parseFromStream(std::istream *);
 
   private:
 

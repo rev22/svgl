@@ -24,6 +24,7 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 #include <w3c/dom/ext/DOMParser.hpp>
 #include <utils/StdioInputSource.hpp>
 #include <utils/StringInputSource.hpp>
+#include <utils/IstreamInputSource.hpp>
 #include <utils/EntityResolver.hpp>
 #include <w3c/dom/ext/DOMWriter.hpp>
 #include <w3c/dom/DOMImplementation.hpp>
@@ -135,6 +136,11 @@ namespace svgl {
 
 	svg::SVGDocument *Parser::parseFromString(unicode::String *svgdesc) {
 		sdom::StringInputSource input(svgdesc);
+		return parseInputSource(&input);
+	}
+	
+	svg::SVGDocument *Parser::parseFromStream(std::istream *stream) {
+		sdom::IstreamInputSource input(stream);
 		return parseInputSource(&input);
 	}
 
