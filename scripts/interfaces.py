@@ -386,6 +386,16 @@ inter.include_attributes.append('''
 \tpublic:
 \t\tvoid setText(const char*);
 \t\t//string getText();
+
+\t\tvirtual long  getNumberOfChars();
+\t\tvirtual float getComputedTextLength();
+\t\tvirtual float getSubStringLength(unsigned long charnum, unsigned long nchars);
+
+//\t\tvirtual SVGPoint *getStartPositionOfChar(unsigned long charnum);		
+//\t\tvirtual SVGPoint *getEndPositionOfChar(unsigned long charnum);
+//\t\tvirtual SVGRect  *getExtentOfChar(unsigned long charnum);
+//\t\tvirtual float     getRotationOfChar(unsigned long charnum);
+//\t\tvirtual long      getCharNumAtPosition(const SVGPoint& point);
 ''')
 
 inter.include_fwd_decls=["dom::Text"]

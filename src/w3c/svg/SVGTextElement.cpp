@@ -389,7 +389,7 @@ namespace svg {
    	return res;
 	}
 
-	float	SVGTextElement::getComputedTextLength() {
+	float SVGTextElement::getComputedTextLength() {
 		return getSubStringLength(0, (unsigned long)(-1));
 	}
 
@@ -442,6 +442,7 @@ namespace svg {
 		return res;
 	}
 
+/*
 	SVGPoint *SVGTextElement::getStartPositionOfChar(unsigned long charnum) {
 		throw dom::DOMException(dom::DOMException::NOT_SUPPORTED_ERR);
 	}
@@ -461,6 +462,6 @@ namespace svg {
 	long SVGTextElement::getCharNumAtPosition(const SVGPoint& point) {
 		throw dom::DOMException(dom::DOMException::NOT_SUPPORTED_ERR);
 	}
-
+*/
 // [rb] */
 }
