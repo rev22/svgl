@@ -17,6 +17,7 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 #include <w3c/svg/SVGTextContentElement.hpp>
 #include <w3c/svg/SVGSVGElement.hpp>
 
+#include <svgl/InitHelper.hpp>
 #include <svgl/Context.hpp>
 #include <svgl/GLInfo.hpp>
 #include <svgl/TextInfo.hpp>
@@ -366,4 +367,100 @@ namespace svg {
     insertBefore(t,0);
   }
 
+// /* [rb] inherited from SVGTextContentElement
+
+	long SVGTextElement::getNumberOfChars() {
+		long res = 0;
+		
+		for(dom::Node *n = getFirstChild(); n != 0; n = n->getNextSibling()) {
+			dom::Text *pcdata = dynamic_cast< dom::Text * >(n);
+			if(pcdata != 0) {
+				const unicode::String *content = pcdata->getData();
+				unicode::String::size_type len = content->getLength();
+				res += len;
+
+			} else {
+				SVGTextContentElement *e = dynamic_cast< SVGTextContentElement * >(n);
+				if(e != 0) {
+					res += e->getNumberOfChars();
+				}
+			}
+		}
+   	return res;
+	}
+
+	float	SVGTextElement::getComputedTextLength() {
+		return getSubStringLength(0, (unsigned long)(-1));
+	}
+
+	float SVGTextElement::getSubStringLength(unsigned long charnum, unsigned long nchars) {
+		// not compliant with recommandation because don't throw exception
+		// and works only if TextElement contains only dom::Text
+		float res = 0.;		
+		
+		const css::CSSStyleDeclaration& style = getStyle().getValue();
+		css::CSSStyle::FontFamilyType fontfamily = style.getFontFamily();
+		css::CSSStyle::FontStyleType fontstyle = style.getFontStyle();
+		css::CSSStyle::FontWeightType fontweight = style.getFontWeight();
+
+		glft::FontInfo f;
+		f.family = fontfamily->transcode();
+		f.style = fontstyle;
+		f.weight = fontweight;
+		for(int i = 0; i < f.family.length(); ++i) {
+			f.family[i] = tolower(f.family[i]);
+		}
+		
+		svgl::Context *svglContext = svgl::InitHelper::get()->context;
+
+		css::CSSStyle::FontSizeType sizel = style.getFontSize();
+		unsigned int size = (unsigned int)(svglContext->computeWidthLength(sizel));
+		
+		svglContext->fontManager->setCurrentFont(f, size);
+		svglContext->fontSize = size;
+		
+		unsigned long charindex = 0;
+		for(dom::Node *n = getFirstChild(); n != 0; n = n->getNextSibling()) {
+			dom::Text *pcdata = dynamic_cast< dom::Text * >(n);
+			if(pcdata != 0) {
+				const unicode::String *content = pcdata->getData();
+				unicode::String::size_type len = content->getLength();
+			
+				for(unicode::String::size_type c = 0; c < len; ++c) {
+					if(charindex >= charnum + nchars) {
+						return res;
+					}
+					if(charindex >= charnum) {
+						unicode::String::char_type domchar = (*content)[c];
+						res += svglContext->fontManager->getXAdvance(domchar);
+					}
+					charindex++;
+				}
+			}
+		}
+
+		return res;
+	}
+
+	SVGPoint *SVGTextElement::getStartPositionOfChar(unsigned long charnum) {
+		throw dom::DOMException(dom::DOMException::NOT_SUPPORTED_ERR);
+	}
+
+	SVGPoint *SVGTextElement::getEndPositionOfChar(unsigned long charnum) {
+		throw dom::DOMException(dom::DOMException::NOT_SUPPORTED_ERR);
+	}
+	
+	SVGRect *SVGTextElement::getExtentOfChar(unsigned long charnum) {
+		throw dom::DOMException(dom::DOMException::NOT_SUPPORTED_ERR);
+	}
+
+	float SVGTextElement::getRotationOfChar(unsigned long charnum) {
+		throw dom::DOMException(dom::DOMException::NOT_SUPPORTED_ERR);
+	}
+
+	long SVGTextElement::getCharNumAtPosition(const SVGPoint& point) {
+		throw dom::DOMException(dom::DOMException::NOT_SUPPORTED_ERR);
+	}
+
+// [rb] */
 }
