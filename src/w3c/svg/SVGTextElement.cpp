@@ -386,7 +386,8 @@ namespace svg {
 				}
 			}
 		}
-   	return res;
+	
+	   	return res;
 	}
 
 	float SVGTextElement::getComputedTextLength() {
@@ -396,6 +397,9 @@ namespace svg {
 	float SVGTextElement::getSubStringLength(unsigned long charnum, unsigned long nchars) {
 		// not compliant with recommandation because don't throw exception
 		// and works only if TextElement contains only dom::Text
+
+//		std::cerr << "SVGTextElement::getSubStringLength(" << charnum << ", " << nchars << ")" << std::endl;
+		
 		float res = 0.;		
 		
 		const css::CSSStyleDeclaration& style = getStyle().getValue();
@@ -421,19 +425,29 @@ namespace svg {
 		
 		unsigned long charindex = 0;
 		for(dom::Node *n = getFirstChild(); n != 0; n = n->getNextSibling()) {
+//			std::cerr << "new node" << std::endl;
+
 			dom::Text *pcdata = dynamic_cast< dom::Text * >(n);
 			if(pcdata != 0) {
 				const unicode::String *content = pcdata->getData();
 				unicode::String::size_type len = content->getLength();
 			
 				for(unicode::String::size_type c = 0; c < len; ++c) {
+//					std::cerr << "charindex : " << charindex;
+
 					if(charindex >= charnum + nchars) {
+//						std::cerr << " - stop" << std::endl;
+
 						return res;
 					}
+
 					if(charindex >= charnum) {
 						unicode::String::char_type domchar = (*content)[c];
 						res += svglContext->fontManager->getXAdvance(domchar);
+//						std::cerr << " - res : " << res;
 					}
+
+//					std::cerr << std::endl;
 					charindex++;
 				}
 			}

@@ -233,10 +233,10 @@
 				5B29B4480614A6A5001C2701,
 			);
 			isa = PBXGroup;
-			name = DerivedSources;
-			path = svgl.build/preall.build/DerivedSources;
-			refType = 3;
-			sourceTree = BUILT_PRODUCTS_DIR;
+			name = w3c;
+			path = /Users/blanch/dst/svgl/src/w3c;
+			refType = 0;
+			sourceTree = "<absolute>";
 		};
 		5B29B4480614A6A5001C2701 = {
 			children = (
@@ -5670,9 +5670,9 @@
 			);
 			isa = PBXGroup;
 			name = svg;
-			path = local/include/w3c/svg;
-			refType = 3;
-			sourceTree = BUILT_PRODUCTS_DIR;
+			path = /Users/blanch/dst/svgl/src/w3c/svg;
+			refType = 0;
+			sourceTree = "<absolute>";
 		};
 		5BEE673A05C52320005D50D4 = {
 			fileEncoding = 30;
