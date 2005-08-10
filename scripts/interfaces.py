@@ -432,7 +432,7 @@ svgl::TextInfo * _textinfo;
 
 
 	void setFont(svgl::Context * svglContext, svgl::GLInfo* glinfo, svgl::TextInfo* textinfo, glft::FontManager::font_type t);
-	void SVGTextContentElement::setFont(svgl::Context * svglContext, svgl::GLInfo* glinfo, svgl::TextInfo*);
+	void setFont(svgl::Context * svglContext, svgl::GLInfo* glinfo, svgl::TextInfo*);
 	virtual void computeGeometryForDrawing(svgl::Context * svglContext, svgl::GLInfo* glinfo);
 
 ''')
