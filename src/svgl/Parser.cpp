@@ -17,7 +17,7 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 #include <w3c/svg/svg.hpp>
 #include <svgl/Parser.hpp>
 #include <w3c/svg/String.hpp>
-// #include <w3c/svg/strings.hpp>
+//#include <w3c/svg/strings.hpp>
 
 //#include <w3c/dom/dom.hpp>
 #include <stdlib.h>
