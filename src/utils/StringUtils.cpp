@@ -1,6 +1,8 @@
 #include <utils/StringUtils.hpp>
 #include <svgl/debug.hpp>
 
+#include <cmath>
+
 namespace unicode {
 
   String::size_type

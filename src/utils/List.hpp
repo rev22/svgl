@@ -15,7 +15,7 @@ class List : public std::vector<T>
 {
 public:
   virtual ~List() {}
-    unsigned int getLength() const { return size(); }
+    unsigned int getLength() const { return this->size(); }
     T item(unsigned int index) const { return (*this)[index]; }
 };
 

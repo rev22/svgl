@@ -9,6 +9,8 @@
 
 #include "panAndZoom.hpp"
 
+#include <cmath> // exp2
+
 namespace panAndZoom {
 
 svg::SVGTranslateTransform * panTransform = 0;

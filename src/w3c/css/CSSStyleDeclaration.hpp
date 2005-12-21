@@ -67,7 +67,7 @@ namespace css {
     typedef bool DisplayType;
     typedef css::TextAnchor TextAnchorType;
 		typedef std::vector<float> StrokeDasharrayType;
-		typedef svg::SVGLength LengthType;
+//		typedef svg::SVGLength LengthType;
     //typedef unicode::String* TextAnchorType;
     //typedef __ClipPath* ClipPathType;
 

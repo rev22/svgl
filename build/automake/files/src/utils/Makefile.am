@@ -11,6 +11,7 @@ libsrcutils_la_SOURCES = EntityResolver.cpp\
 			StringInputSource.cpp\
 			StringUtils.cpp
 AM_CPPFLAGS = -I$(top_builddir)/src/
+
 pkgincludedir = @SVGL_INCLUDEDIR@/utils
 pkginclude_HEADERS = \
 	EntityResolver.hpp\

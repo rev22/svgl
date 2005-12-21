@@ -78,9 +78,9 @@ namespace agg
     template<class T, unsigned S> 
     void vertex_sequence<T, S>::add(const T& val)
     {
-        if(size() > 1)
+        if(this->size() > 1)
         {
-            if(!(*this)[size() - 2]((*this)[size() - 1])) remove_last();
+            if(!(*this)[this->size() - 2]((*this)[this->size() - 1])) this->remove_last();
         }
         array<T,S>::add(val);
     }
@@ -100,20 +100,20 @@ namespace agg
     template<class T, unsigned S> 
     void vertex_sequence<T, S>::close(bool closed)
     {
-        while(size() > 1)
+        while(this->size() > 1)
         {
-            if((*this)[size() - 2]((*this)[size() - 1])) break;
-            T t = (*this)[size() - 1];
+            if((*this)[this->size() - 2]((*this)[this->size() - 1])) break;
+            T t = (*this)[this->size() - 1];
             array<T,S>::remove_last();
             modify_last(t);
         }
 
         if(closed)
         {
-            while(size() > 1)
+            while(this->size() > 1)
             {
-                if((*this)[size() - 1]((*this)[0])) break;
-                remove_last();
+                if((*this)[this->size() - 1]((*this)[0])) break;
+                this->remove_last();
             }
         }
     }

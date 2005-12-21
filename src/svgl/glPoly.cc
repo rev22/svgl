@@ -111,7 +111,7 @@ tessCombine(GLdouble coords[3],
 void
 glPoly::setTessCallbacks(GLUtesselator * gluTess)
 {
-  typedef GLvoid (*fn_type)();
+  typedef GLvoid (*fn_type)(...);
 #if 1
   gluTessCallback(gluTess, GLU_TESS_BEGIN_DATA, reinterpret_cast<fn_type>(beginCallback) );
   gluTessCallback(gluTess, GLU_TESS_END_DATA, reinterpret_cast<fn_type>(endCallback));

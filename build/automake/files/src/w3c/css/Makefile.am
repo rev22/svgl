@@ -6,7 +6,6 @@ libsrcw3c_css_la_SOURCES = CSSRGBColor.cpp\
 			CSSURI.cpp
 AM_CPPFLAGS = -I$(top_builddir)/src/
 
-
 pkgincludedir = @SVGL_INCLUDEDIR@/w3c/css
 pkginclude_HEADERS = \
 	CSSRule.hpp\

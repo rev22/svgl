@@ -23,6 +23,8 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 #include <svgl/debug.hpp>
 #include <svgl/getattr.hpp>
 
+#include <cmath>
+
 #ifndef CALLBACK
 #define CALLBACK
 #endif

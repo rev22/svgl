@@ -39,21 +39,21 @@ namespace agg
 
         void remove_all_dashes() 
         { 
-            generator().remove_all_dashes(); 
+            this->generator().remove_all_dashes(); 
         }
 
         void add_dash(double dash_len, double gap_len) 
         { 
-            generator().add_dash(dash_len, gap_len); 
+            this->generator().add_dash(dash_len, gap_len); 
         }
 
         void dash_start(double ds) 
         { 
-            generator().dash_start(ds); 
+            this->generator().dash_start(ds); 
         }
 
-        void shorten(double s) { generator().shorten(s); }
-        double shorten() const { return generator().shorten(); }
+        void shorten(double s) { this->generator().shorten(s); }
+        double shorten() const { return this->generator().shorten(); }
     };
 
 

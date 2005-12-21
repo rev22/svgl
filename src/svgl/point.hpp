@@ -16,8 +16,10 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 #ifndef _point_h
 #define _point_h
 
+/*
 class istream;
 class ostream;
+*/
 
 enum dimension { x_dimension, y_dimension, z_dimension };
 
@@ -75,7 +77,7 @@ template <int Dim, class Coord>
 inline Coord norm2(const vector_<Dim, Coord>& ve)
 {
   Coord c = 0;
-  CFOREACH { c += v[i]*v[i]; }
+  CFOREACH { c += ve.v[i]*ve.v[i]; }
   return c;
 }
 
@@ -174,6 +176,7 @@ point_<Dim, Coord>::operator == (const point_<Dim, Coord>& pt) const
   return true;
 }
 
+/*
 template <int Dim, class Coord>
 inline ostream&
 operator << (ostream& out, const point_<Dim, Coord> p)
@@ -191,6 +194,7 @@ operator >> (istream& in, point_<Dim, Coord>& p)
   CFOREACH { in >> p[i]; in.ignore(1); }
   return in;
 }
+*/
 
 template <int Dim, class Coord>
 inline vector_<Dim, Coord>&
@@ -295,6 +299,7 @@ vector_<Dim, Coord>::operator == (const vector_<Dim,Coord>& ve) const
   return true;
 }
 
+/*
 template <int Dim, class Coord>
 inline ostream&
 operator << (ostream& out, const vector_<Dim, Coord>& v)
@@ -312,6 +317,7 @@ operator >> (istream& in, vector_<Dim, Coord>& v)
   CFOREACH { in >> v[i]; in.ignore(1); }
   return in;
 }
+*/
 
 template <int Dim, class Coord>
 inline point_<Dim, Coord>&

@@ -4,6 +4,12 @@
 #include <w3c/svg/SVGTransformable.hpp>
 #include <w3c/svg/SVGStylable.hpp>
 
+#if defined (__APPLE__) 
+#include <OpenGL/gl.h>
+#else
+#include <GL/gl.h>
+#endif
+
 namespace svgl {
 
   template <class SimpleShape>
