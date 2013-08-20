@@ -27,7 +27,7 @@ done
 mkdir tools
 
 
-
+if false; then
 automake_version=`automake --version | grep 'automake' | sed -e 's/^[^0-9]*\([0-9.][0-9.]*\).*$/\1/'`
 libtool_version=`libtoolize --version | grep 'libtoolize' | sed -e 's/^[^0-9]*\([0-9.][0-9.]*\).*$/\1/'`
 autoconf_version=`env WANT_AUTOCONF_2_5=1 autoconf --version | grep 'autoconf' | sed -e 's/^[^0-9]*\([0-9.][0-9.]*\).*$/\1/'`
@@ -76,11 +76,12 @@ if $do_abort ; then
     echo "...aborting"
     exit 1
 fi
+fi
 
 set -x
 
 rm -rf autom4te*.cache
-aclocal -I /sw/share/aclocal || exit 1
+aclocal -I /usr/share/aclocal || exit 1
 autoheader || exit 2
 libtoolize --automake || exit 3
 automake --add-missing || exit 4

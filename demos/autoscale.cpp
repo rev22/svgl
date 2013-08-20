@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include <glft/FontManager.hpp>
 
 #if defined(__APPLE__)
