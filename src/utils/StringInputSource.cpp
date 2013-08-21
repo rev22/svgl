@@ -3,6 +3,8 @@
 
 #include <svgl/debug.hpp>
 
+#include <string.h>
+
 namespace sdom {
 
 StringInputSource::StringInputSource(String * content)

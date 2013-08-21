@@ -1,6 +1,8 @@
 #include <string>
 #include <utils/StringImpl.hpp>
 
+#include <string.h>
+
 namespace unicode {
 
 template <class T>

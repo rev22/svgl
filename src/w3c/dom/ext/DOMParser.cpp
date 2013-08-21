@@ -312,7 +312,7 @@ DOMParser::getErrorHandler() const
 static String *
 qualifiedString(const XML_Char * str)
 {
-  char * sep = strchr(str, NS_SEP);
+  const char * sep = strchr(str, NS_SEP);
   String * eltName;
 
   if (sep != null) {		// create the prefixed name
@@ -336,7 +336,7 @@ static void StartElementHandler(void *userData,
 
   String * namespaceURI = ctx->getNamespaceURI();
   String * eltName;
-  char * colon = strchr(name, NS_SEP);
+  const char * colon = strchr(name, NS_SEP);
 
   if (colon != null) {
     namespaceURI = String::internStringUtf8(name, colon - name);

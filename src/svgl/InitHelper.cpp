@@ -17,6 +17,8 @@
 
 #include <svgl/debug.hpp>
 
+#include <stdlib.h> /* for getenv */
+
 #if SVGL_USE_GC
 extern int GC_dont_gc;
 #endif

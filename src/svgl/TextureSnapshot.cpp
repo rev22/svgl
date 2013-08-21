@@ -28,7 +28,7 @@ namespace svgl {
     : _x(x), _y(y), _width(width), _height(height), _format(format)
   {
 #if 1
-	_target = GL_TEXTURE_RECTANGLE_EXT;
+	_target = GL_TEXTURE_RECTANGLE_ARB;
 	_texwidth=width;
 	_texheight=height;
 #else

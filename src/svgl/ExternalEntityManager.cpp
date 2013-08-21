@@ -26,7 +26,7 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 
 namespace svgl {
 
-  ExternalEntityManager::ExternalEntityManager* ExternalEntityManager::_default = 0;
+  ExternalEntityManager* ExternalEntityManager::_default = 0;
 
   void ExternalEntityManager::setDefault(ExternalEntityManager* m) { _default = m; }
   ExternalEntityManager* ExternalEntityManager::getDefault() { return _default; }

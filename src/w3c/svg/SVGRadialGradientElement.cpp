@@ -32,6 +32,8 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 
 #include <cmath>
 
+#include <assert.h>
+
 #include <svgl/debug.hpp>
 #include <svgl/getattr.hpp>
 

@@ -24,6 +24,7 @@ http://www.emn.fr/info/image/Themes/Indigo/licence.html
 #include <svgl/getattr.hpp>
 
 #include <cmath>
+#include <string.h>
 
 #ifndef CALLBACK
 #define CALLBACK
@@ -317,7 +318,7 @@ GLInfo::getCurrentScale() const
   void
   GLInfo::setTessContext()
   {
-    typedef GLvoid (CALLBACK *fn_type)(...);
+    typedef GLvoid (GLAPIENTRYP fn_type)(void);
     gluTessCallback(gluTriangulator, GLU_TESS_BEGIN, reinterpret_cast<fn_type>(tessBegin) );
     gluTessCallback(gluTriangulator, GLU_TESS_END, reinterpret_cast<fn_type>(tessEnd));
     gluTessCallback(gluTriangulator, GLU_TESS_ERROR, reinterpret_cast<fn_type>(tessError));
@@ -330,7 +331,7 @@ GLInfo::getCurrentScale() const
   GLInfo::setTessPolygonContext()
   {
     setTessContext();
-    typedef void (CALLBACK *fn_type)(...);
+    typedef void (GLAPIENTRYP fn_type)(void);
     gluTessCallback(gluTriangulator, GLU_TESS_VERTEX, reinterpret_cast<fn_type>(tessVertexPolygon));
     gluTessCallback(gluTriangulator, GLU_TESS_COMBINE, reinterpret_cast<fn_type>(tessVertexCombine));				
   }
@@ -339,7 +340,7 @@ GLInfo::getCurrentScale() const
   GLInfo::setTessPathContext()
   {
     setTessContext();
-    typedef void (CALLBACK *fn_type)(...);
+    typedef void (GLAPIENTRYP fn_type)(void);
     // gluTessCallback(gluTriangulator, GLU_TESS_VERTEX, reinterpret_cast<fn_type>(tessVertexPath));
     gluTessCallback(gluTriangulator, GLU_TESS_VERTEX, reinterpret_cast<fn_type>(glVertex2dv));
     gluTessCallback(gluTriangulator, GLU_TESS_COMBINE, reinterpret_cast<fn_type>(tessCombine));

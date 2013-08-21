@@ -1,5 +1,6 @@
 #include <utils/IstreamInputSource.hpp>
 #include <utils/String.hpp>
+#include <stdio.h> /* for EOF */
 
 namespace sdom {
 

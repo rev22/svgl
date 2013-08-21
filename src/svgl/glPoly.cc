@@ -9,6 +9,7 @@
 #include <glPoly.h>
 
 #include <iostream>
+#include <malloc.h>
 
 #if 0
 void
@@ -111,7 +112,7 @@ tessCombine(GLdouble coords[3],
 void
 glPoly::setTessCallbacks(GLUtesselator * gluTess)
 {
-  typedef GLvoid (*fn_type)(...);
+  typedef GLvoid (GLAPIENTRYP fn_type)(void);
 #if 1
   gluTessCallback(gluTess, GLU_TESS_BEGIN_DATA, reinterpret_cast<fn_type>(beginCallback) );
   gluTessCallback(gluTess, GLU_TESS_END_DATA, reinterpret_cast<fn_type>(endCallback));

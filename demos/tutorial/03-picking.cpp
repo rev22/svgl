@@ -22,6 +22,8 @@
 #include "../../tests/panAndZoom.hpp"
 #include <iostream>
 
+#include <assert.h>
+
 svg::SVGDocument * thesvgdoc=0;
 svgl::DisplayManager * displayManager=0;
 svgl::PickManager * pickManager=0;
