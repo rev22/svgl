@@ -63,11 +63,14 @@ namespace svg {
 }
 
 namespace svg {
-  extern void parseTransform(unicode::String*, svg::SVGTransformList* );
+  extern void parseTransform(unicode::String*, svg::SVGList<svg::SVGTransform*>* );
   extern bool parsePoints(unicode::String*, svg::SVGPointList*);
   extern void parsePathSegList(unicode::String*, svg::SVGPathSegList*);
 }
 
+namespace svg {
+  typedef svg::SVGList<svg::SVGLength> SVGLengthList;
+}
 
 // basic types
 
@@ -75,14 +78,14 @@ namespace svgl {
 using namespace svg;
 inline
 void
-read( unicode::String* in,  unicode::String*& s)
+read( unicode::String*& in,  unicode::String*& s)
 {
   s=in;
 }
 
 inline
 void
-read ( unicode::String* in, int& b)
+read ( unicode::String*& in, int& b)
 {
   if(in)
     unicode::get_dec_signed_int(*in, &b);
@@ -90,7 +93,7 @@ read ( unicode::String* in, int& b)
 
 inline
 void
-read ( unicode::String* in, float& b)
+read ( unicode::String*& in, float& b)
 {
   if(in)
     unicode::get_float(*in, &b);
@@ -98,10 +101,120 @@ read ( unicode::String* in, float& b)
 
 inline
 void
-read ( unicode::String* in, bool& b)
+read ( unicode::String*& in, bool& b)
 {
   if(in)
     unicode::get_bool(*in, &b);
+}
+
+inline
+void
+read( unicode::String*& in, svg::SVGLength& l)
+{
+  if(in)
+    l.dom_setValueAsString(in);
+}
+
+inline
+void
+read( unicode::String*& in, svg::SVGRect& l)
+{
+  std::vector<float> v;
+  if(in && !unicode::get_float_list(*in, &v)) {
+    std::cerr << "could not read SVGRect " __FILE__ << ":" << __LINE__ << std::endl;
+    return;
+  }
+#if 1
+  if(!v.size())
+    return;
+#endif
+  if(v.size()!=4) {
+    std::cerr << "SVGRect " << in << " has not 4 coords " __FILE__ << ":" << __LINE__ << std::endl;
+    return;
+  }
+
+  l.dom_setX(v[0]);
+  l.dom_setY(v[1]);
+  l.dom_setWidth(v[2]);
+  l.dom_setHeight(v[3]);
+
+}
+
+
+inline
+void
+read ( unicode::String*& in, svg::SVGNumber& b)
+{
+  float f;
+  if(in) {
+    unicode::get_float(*in, &f);
+    b.dom_setValue(f);
+  }
+}
+
+// lists
+
+void
+read ( unicode::String*, svg::SVGLengthList& );
+void
+read ( unicode::String* in, svg::SVGNumberList& );
+void
+read ( unicode::String* in, svg::SVGList<dom::string>& );
+
+
+// other stuff
+
+void
+read ( unicode::String* in, svg::SVGPreserveAspectRatio& l);
+
+inline
+void
+read( unicode::String*& in, svg::SVGElement*& e)
+{
+}
+
+
+inline
+void
+read( unicode::String*& in, css::CSSStyleDeclaration& l)
+{
+  //if(in)
+  l.setStyleString(in);
+}
+
+inline
+void
+read ( unicode::String*& in, svg::SVGList<svg::SVGTransform*>& l)
+{
+  if(in)
+    svg::parseTransform(in, &l);
+}
+
+inline
+void
+read ( unicode::String*& in, svg::SVGPointList& l)
+{
+  if(in)
+    svg::parsePoints(in, &l);
+}
+
+inline
+void
+read ( unicode::String*& in, svg::SVGPathSegList& l)
+{
+  if(in)
+    svg::parsePathSegList(in, &l);
+}
+
+template <class X>
+inline
+void
+read( unicode::String*& in, svg::Animated<X>& anim)
+{
+  X& x = anim.getBaseVal().getValue();
+  if(in)
+    read(in, x);
+  anim.getAnimatedVal().setValue(x);
 }
 
 // basic SVG types
@@ -132,118 +245,7 @@ read( unicode::String* in, svg::Attribute<unicode::String*>& attr)
 }
 #endif
 
-
-template <class X>
-inline
-void
-read( unicode::String* in, svg::Animated<X>& anim)
-{
-  X& x = anim.getBaseVal().getValue();
-  if(in)
-    read(in, x);
-  anim.getAnimatedVal().setValue(x);
-}
-
-inline
-void
-read( unicode::String* in, svg::SVGLength& l)
-{
-  if(in)
-    l.dom_setValueAsString(in);
-}
-
-inline
-void
-read( unicode::String* in, svg::SVGRect& l)
-{
-  std::vector<float> v;
-  if(in && !unicode::get_float_list(*in, &v)) {
-    std::cerr << "could not read SVGRect " __FILE__ << ":" << __LINE__ << std::endl;
-    return;
-  }
-#if 1
-  if(!v.size())
-    return;
-#endif
-  if(v.size()!=4) {
-    std::cerr << "SVGRect " << in << " has not 4 coords " __FILE__ << ":" << __LINE__ << std::endl;
-    return;
-  }
-
-  l.dom_setX(v[0]);
-  l.dom_setY(v[1]);
-  l.dom_setWidth(v[2]);
-  l.dom_setHeight(v[3]);
-
-}
-
-
-inline
-void
-read ( unicode::String* in, svg::SVGNumber& b)
-{
-  float f;
-  if(in) {
-    unicode::get_float(*in, &f);
-    b.dom_setValue(f);
-  }
-}
-
-
-// lists
-
-void
-read ( unicode::String* in, svg::SVGLengthList&);
-void
-read ( unicode::String* in, svg::SVGNumberList&);
-void
-read ( unicode::String* in, svg::SVGList<unicode::String*>&);
-
-
-// other stuff
-
-void
-read ( unicode::String* in, svg::SVGPreserveAspectRatio& l);
-
-inline
-void
-read( unicode::String* in, svg::SVGElement*& e)
-{
-}
-
-
-inline
-void
-read( unicode::String* in, css::CSSStyleDeclaration& l)
-{
-  //if(in)
-  l.setStyleString(in);
-}
-
-inline
-void
-read ( unicode::String* in, svg::SVGTransformList& l)
-{
-  if(in)
-    svg::parseTransform(in, &l);
-}
-
-inline
-void
-read ( unicode::String* in, svg::SVGPointList& l)
-{
-  if(in)
-    svg::parsePoints(in, &l);
-}
-
-inline
-void
-read ( unicode::String* in, svg::SVGPathSegList& l)
-{
-  if(in)
-    svg::parsePathSegList(in, &l);
-}
-
+  
 } // namespace svgl
 
 template <class X>
