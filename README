@@ -1,7 +1,6 @@
-svgl is a library that displays SVG documents using OpenGL.
-http://svgl.sf.net
+SVGL is a library that displays SVG documents using OpenGL.
 
-SVGL is a direct SVG -> OpenGL rendering engine written in C++.
+It is a direct SVG -> OpenGL rendering engine written in C++.
 
 The absence of an additional raster step makes it very performant.
 
@@ -21,7 +20,7 @@ A build script for Unix/Linux is available in build/build.sh; simply execute it 
 
 The following software needs to be installed for the build process:
 
-- a C++ compiler
+- a C++ compiler, for example g++ or clang
 - autoconf
 - xutils
 - automake
