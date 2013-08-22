@@ -1,0 +1,5 @@
+//
+// Prefix header for all source files of the 'glft' target in the 'glft' project.
+//
+
+#include <Carbon/Carbon.h>

@@ -1,0 +1,10 @@
+configure.ac
+glft.pc.in
+glft-uninstalled.pc.in
+Makefile.am
+AUTHORS
+NEWS
+ChangeLog
+LICENSE
+glft/Makefile.am
+demos/Makefile.am

@@ -1,0 +1,91 @@
+#!/bin/sh
+#
+# build-utils/bootstrap --
+#
+# Copyright (C) Nicolas Roussel
+#
+# See the file LICENSE for information on usage and redistribution of
+# this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+
+
+BUILDDIR=`pwd`
+
+BS_DIR=`dirname $0`
+cd $BS_DIR/../..
+SRC_DIR=`pwd`
+
+echo "source : " $SRC_DIR
+echo "build : "$BUILDDIR
+
+cd $BUILDDIR
+lndir $SRC_DIR
+
+for f in `cat $BS_DIR/filelist`; do
+  ln -s $SRC_DIR/build/automake/files/$f $f
+done
+mkdir tools
+
+
+if false; then
+automake_version=`automake --version | grep 'automake' | sed -e 's/^[^0-9]*\([0-9.][0-9.]*\).*$/\1/'`
+libtool_version=`libtoolize --version | grep 'libtoolize' | sed -e 's/^[^0-9]*\([0-9.][0-9.]*\).*$/\1/'`
+autoconf_version=`env WANT_AUTOCONF_2_5=1 autoconf --version | grep 'autoconf' | sed -e 's/^[^0-9]*\([0-9.][0-9.]*\).*$/\1/'`
+
+echo "found automake version: $automake_version (1.7.x or better required) "
+echo "found libtool version:  $libtool_version   (1.4.x or better required)"
+echo "found autoconf version: $autoconf_version  (2.57 or better required)"
+
+bad_libtool=false
+case $libtool_version in
+    0.*|1.0*|1.1*|1.2*|1.3*)
+	bad_libtool=true
+    ;;
+esac
+
+bad_automake=false
+case $automake_version in
+    0.*|1.0*|1.1*|1.2*|1.3*|1.4*|1.5*|1.6*)
+	bad_automake=true
+    ;;
+esac
+
+bad_autoconf=false
+case $autoconf_version in
+    0.*|1.*|2.0*|2.1*|2.2*|2.3*|2.4*)
+	bad_autoconf=true
+    ;;
+esac
+
+do_abort=false
+
+if $bad_automake ; then
+    echo "automake version 1.7 or better is required"
+    do_abort=true
+fi
+if $bad_libtool ; then
+    echo "libtool version 1.4 or better is required"
+    do_abort=true
+fi
+if $bad_autoconf ; then
+    echo "autoconf version 2.57 or better is required"
+    do_abort=true
+fi
+
+if $do_abort ; then
+    echo "...aborting"
+    exit 1
+fi
+fi
+
+set -x
+
+rm -rf autom4te*.cache
+aclocal -I /usr/share/aclocal || exit 1
+autoheader || exit 2
+libtoolize --automake || exit 3
+automake --add-missing || exit 4
+env WANT_AUTOCONF_2_5=1 autoconf || exit 5
+# WANT_AUTOCONF_2_5 is used by Mandrake Linux 8.2
+
+# autoreconf || exit 6
