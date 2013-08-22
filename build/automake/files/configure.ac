@@ -320,7 +320,7 @@ AC_SUBST(SVGL_USE_GC)
 
 CPPFLAGS="$CPPFLAGS $GLFT_CFLAGS"
 #LDFLAGS="$LDFLAGS $GLFT_LDFLAGS"
-LIBS="$LIBS $GLFT_LIBS"
+#LIBS="$LIBS $GLFT_LIBS"
 
 
 # -------------------------------------------------
