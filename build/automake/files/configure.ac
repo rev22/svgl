@@ -150,7 +150,7 @@ AC_CHECK_HEADERS(png.h)
 AC_CHECK_LIB(png,png_check_sig, [], [AC_MSG_ERROR(couldn't find png library)])
 LIBS="-lpng $LIBS"
 
-PKG_CHECK_MODULES(GLFT, glft)
+PKG_CHECK_MODULES(GLFT, [glft/glft.pc])
 #CPPFLAGS="$CPPFLAGS $GLFT_CFLAGS"
 #LDFLAGS="$LDFLAGS $GLFT_LDFLAGS"
 #LIBS="$LIBS $GLFT_LIBS"

@@ -6,6 +6,6 @@ set -e
 
 build/automake/bootstrap
 
-PKG_CONFIG_PATH="$(cd glft && pwd)" ./configure
+./configure
 
 make
