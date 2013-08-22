@@ -9,7 +9,7 @@
  Jean-Daniel Fekete and Ecole des Mines de Nantes.  You shall use it
  only in accordance with the terms of the license agreement you
  accepted when downloading this software.  The license is available in
- the file licence.txt and at the following URL:
+ the file license.txt and at the following URL:
  http://www.emn.fr/info/image/Themes/Indigo/licence.html
  
  */

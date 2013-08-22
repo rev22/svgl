@@ -1,6 +1,6 @@
 #!/bin/sh
 
-keep="CVS README build apps demos docs samples include licence.html licence.txt misc scripts share src"
+keep="CVS README build apps demos docs samples include licence.html license.txt misc scripts share src"
 
 if test -f .cleanupok; then
 else

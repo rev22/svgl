@@ -10,7 +10,7 @@ The absence of an additional raster step makes it very performant.
 Copyright (c) 2000-2004 Stephane Conversy <conversy@enac.fr>, http://www.tls.cena.fr/~conversy
 Copyright (c) 2000-2004 Jean-Daniel Fekete <fekete@inria.fr>, http://www.lri.fr/~conversy
 
-- see licence.txt for the GNU LGPL license
+- see license.txt for the GNU LGPL license
 - see docs/agglicense.txt for agg license
 
 ## Building and installation ##
