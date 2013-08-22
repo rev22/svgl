@@ -34,14 +34,16 @@ The following software needs to be installed for the build process:
 
    $ env GLFT_FONTDIR=/my/path/to/truetype/fonts demos/00simple
 
-### install ###
-make install
+### installation ###
 
-(see docs/INSTALL for further explanations)
+   $ make install
+
+See docs/INSTALL for further explanations
 
 
 ### documentation ###
-see docs/ subdirectory.
+
+See docs/* files.
 
 ## History ##
 
