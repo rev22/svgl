@@ -1,0 +1,4 @@
+usr/include/*
+usr/lib/libsvgl.a
+usr/lib/libsvgl.la
+usr/lib/pkgconfig/*

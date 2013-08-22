@@ -1,0 +1,27 @@
+Source: svgl
+Priority: extra
+Maintainer: Michele Bini <michele.bini@gmail.com>
+Build-Depends: debhelper (>= 8.0.0), autotools-dev, g++ (>= 3.3) | clang (>= 3.4), xutils-dev, libtool, libexpat1-dev, libpng12-dev, pkg-config
+Standards-Version: 3.9.4
+Section: libs
+Homepage: http://sourceforge.net/projects/svgl/
+Vcs-Git: https://github.com/rev22/svgl.git
+Vcs-Browser: http://github.com/rev22/svgl
+
+Package: libsvgl-dev
+Section: libdevel
+Architecture: any
+Depends: libsvgl0 (= ${binary:Version})
+Description: Library for displaying SVG with OpenGL
+ "svgl" is a library that displays SVG documents using OpenGL.
+ Is a direct SVG -> OpenGL rendering engine written in C++.
+ The absence of an additional raster step makes it very performant.
+
+Package: libsvgl0
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Library for displaying SVG with OpenGL
+ "svgl" is a library that displays SVG documents using OpenGL.
+ Is a direct SVG -> OpenGL rendering engine written in C++.
+ The absence of an additional raster step makes it very performant.

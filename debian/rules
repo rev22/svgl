@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+case "$1" in
+    build)
+	set -e -x
+	( cd glft && build/automake/bootstrap && ./configure && make )
+	build/automake/bootstrap
+	dh build  --with autotools-dev
+	set +e +x
+	;;
+    *)
+	dh "$1" --with autotools-dev
+	;;
+esac
