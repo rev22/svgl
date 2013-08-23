@@ -7,4 +7,4 @@ Name: glft
 Description: 
 Version: @VERSION@
 Cflags: @CPPFLAGS@ -I${includedir}
-Libs: @LDFLAGS@ -L${libdir} -lglft @LIBS@
+Libs: @LDFLAGS@ @LIBS@

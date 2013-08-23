@@ -13,7 +13,7 @@
 
 AM_CPPFLAGS = -I${top_srcdir} -I${top_builddir}
 
-lib_LTLIBRARIES = libglft.la
+noinst_LTLIBRARIES = libglft.la
 
 libglft_la_SOURCES = FontManager.cpp glft.cpp
 

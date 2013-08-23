@@ -12,7 +12,7 @@
 .SILENT: @DISABLE_SILENT@
 
 AM_CPPFLAGS = -I${top_srcdir} -I${top_builddir}
-AM_LDFLAGS = -L${top_builddir}/glft -lglft
+AM_LDFLAGS = ${top_builddir}/glft/libglft.la
 
 if OS_IS_MACOSX
   AM_LDFLAGS += -framework glut -framework Cocoa
