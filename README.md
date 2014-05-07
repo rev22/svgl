@@ -1,6 +1,6 @@
 SVGL is a library that displays SVG documents using OpenGL.
 
-It is a direct SVG -> OpenGL rendering engine written in C++.
+It is a direct SVG-to-OpenGL rendering engine written in C++.
 
 The absence of an intermediate raster step makes it very performant.
 
@@ -32,11 +32,11 @@ The following software needs to be installed for the build process:
 
 ### testing ###
 
-After compiling, you can test the library using the tests available in `demos/tutorial`, for example
+After compiling, you can test the library with the tests available in `demos/tutorial`, for example
 
    $ demos/tutorial/00simplest
 
-Many of the tests require you to set the GLFT_FONTDIR variable to to a dir containing compatible TrueType font files.
+Many of the tests require you to set the GLFT_FONTDIR variable to a dir containing compatible TrueType font files.
 
 For example, in a Debian system with `ttf-liberation` installed:
 
