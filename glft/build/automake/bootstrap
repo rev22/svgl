@@ -22,7 +22,7 @@ cd $BUILDDIR
 lndir $SRC_DIR
 
 for f in `cat $BS_DIR/filelist`; do
-  ln -s $SRC_DIR/build/automake/files/$f $f
+  cp -a $SRC_DIR/build/automake/files/$f $f
 done
 mkdir tools
 
