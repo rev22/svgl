@@ -1,48 +1,125 @@
-/*
- * $Id$
- *
-Copyright (c) 2001 Stephane Conversy, Jean-Daniel Fekete and Ecole des
-Mines de Nantes.
-All rights reserved.
- 
-This software is proprietary information of Stephane Conversy,
-Jean-Daniel Fekete and Ecole des Mines de Nantes.  You shall use it
-only in accordance with the terms of the license agreement you
-accepted when downloading this software.  The license is available in
-the file licence.txt and at the following URL:
-http://www.emn.fr/info/image/Themes/Indigo/licence.html
+/* src/svgl/config.hpp.in.  Generated from configure.ac by autoheader.  */
 
- */
-#ifndef _svgl_config_hpp
-#define _svgl_config_hpp
+/* defined if AGL is present */
+#undef HAVE_AGL
 
-#ifdef WIN32
-#include <windows.h>
-#endif
+/* Define to 1 if you have the <AGL/agl.h> header file. */
+#undef HAVE_AGL_AGL_H
 
-#ifndef M_PI
-#define M_PI		3.14159265358979323846
-#endif
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#undef HAVE_DLFCN_H
 
-# if (_MSC_VER > 1000)
-// #pragma warning ( disable : 4251 )	// ignore template classes being exported in .dll's
-/* 
- * "this used in base member initializer list"
- * arrow operator warning
- * copy constr & assignment cannot be generated
- * "forcing value to bool 'true' or 'false'
- * typedef used instaead of full type
- * 4018 : signed/unsigned mismatch, 4146 - result still unsigned 
- */
-#  pragma warning ( disable : 4355 4284  4231 4511 4512 4097 4786 4800 4018 4146 4244 4514 4127 )
-#  pragma warning ( disable : 4245 ) // conversion from enum to unsigned int signed/unsigned mismatch
-#  if (_MSC_VER > 1200)
-// multiple copy constructors/assignment operators specified,
-// with member templates are bogus...
-#   pragma warning ( disable : 4521 4522)
-#  endif  
-# endif
+/* Define to 1 if you have the <expat.h> header file. */
+#undef HAVE_EXPAT_H
 
-#endif
+/* Define to 1 if you have the <gc.h> header file. */
+#undef HAVE_GC_H
 
-//#define SVGL_USE_GC=@SVGL_USE_GC@
+/* defined if GLU is present */
+#undef HAVE_GLU
+
+/* defined if GLX is present */
+#undef HAVE_GLX
+
+/* Define to 1 if you have the <GL/glut.h> header file. */
+#undef HAVE_GL_GLUT_H
+
+/* Define to 1 if you have the <GL/glu.h> header file. */
+#undef HAVE_GL_GLU_H
+
+/* Define to 1 if you have the <GL/glx.h> header file. */
+#undef HAVE_GL_GLX_H
+
+/* Define to 1 if you have the <GL/osmesa.h> header file. */
+#undef HAVE_GL_OSMESA_H
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the `expat' library (-lexpat). */
+#undef HAVE_LIBEXPAT
+
+/* Define to 1 if you have the `GL' library (-lGL). */
+#undef HAVE_LIBGL
+
+/* Define to 1 if you have the `GLU' library (-lGLU). */
+#undef HAVE_LIBGLU
+
+/* Define to 1 if you have the `png' library (-lpng). */
+#undef HAVE_LIBPNG
+
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* defined if OPENGL is present */
+#undef HAVE_OPENGL
+
+/* Define to 1 if you have the <png.h> header file. */
+#undef HAVE_PNG_H
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#undef LT_OBJDIR
+
+/* defined if OS is IRIX */
+#undef OS_IS_IRIX
+
+/* defined if OS is LINUX */
+#undef OS_IS_LINUX
+
+/* defined if OS is MAC OS X */
+#undef OS_IS_MACOSX
+
+/* defined if OS is SUN */
+#undef OS_IS_SUNOS
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* Version number of package */
+#undef VERSION
+
+/* Define to 1 if the X Window System is missing or not being used. */
+#undef X_DISPLAY_MISSING

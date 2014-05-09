@@ -1,0 +1,48 @@
+/*
+ * $Id$
+ *
+Copyright (c) 2001 Stephane Conversy, Jean-Daniel Fekete and Ecole des
+Mines de Nantes.
+All rights reserved.
+ 
+This software is proprietary information of Stephane Conversy,
+Jean-Daniel Fekete and Ecole des Mines de Nantes.  You shall use it
+only in accordance with the terms of the license agreement you
+accepted when downloading this software.  The license is available in
+the file licence.txt and at the following URL:
+http://www.emn.fr/info/image/Themes/Indigo/licence.html
+
+ */
+#ifndef _svgl_config_hpp
+#define _svgl_config_hpp
+
+#ifdef WIN32
+#include <windows.h>
+#endif
+
+#ifndef M_PI
+#define M_PI		3.14159265358979323846
+#endif
+
+# if (_MSC_VER > 1000)
+// #pragma warning ( disable : 4251 )	// ignore template classes being exported in .dll's
+/* 
+ * "this used in base member initializer list"
+ * arrow operator warning
+ * copy constr & assignment cannot be generated
+ * "forcing value to bool 'true' or 'false'
+ * typedef used instaead of full type
+ * 4018 : signed/unsigned mismatch, 4146 - result still unsigned 
+ */
+#  pragma warning ( disable : 4355 4284  4231 4511 4512 4097 4786 4800 4018 4146 4244 4514 4127 )
+#  pragma warning ( disable : 4245 ) // conversion from enum to unsigned int signed/unsigned mismatch
+#  if (_MSC_VER > 1200)
+// multiple copy constructors/assignment operators specified,
+// with member templates are bogus...
+#   pragma warning ( disable : 4521 4522)
+#  endif  
+# endif
+
+#endif
+
+//#define SVGL_USE_GC=@SVGL_USE_GC@

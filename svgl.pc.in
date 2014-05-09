@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@/svgl
+
+Name: svgl
+Description: 
+Version: @VERSION@
+Cflags: -I${includedir}
+Libs: @LDFLAGS@ -L${libdir} -lsvgl @LIBS@

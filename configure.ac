@@ -1,0 +1,369 @@
+#AC_REVISION([configure.ac 1.00])
+AC_INIT([SVGL libs & demos], [1.x],[courtois@lri.fr],[svgl])
+#AC_INIT(src/svgl/Parser.cpp)
+
+# --------------------------------------------------------
+
+AC_PATH_PROG(BASH, bash)
+if test -z $BASH; then
+  SHELL=/bin/sh
+else
+  SHELL=$BASH
+fi
+AC_SUBST(SHELL)
+
+# -------------------------------------------------
+
+CC=g++
+
+AM_CONFIG_HEADER(src/svgl/config.hpp)
+AC_CONFIG_AUX_DIR(tools)
+
+AC_CANONICAL_HOST
+AC_CANONICAL_TARGET
+
+AM_INIT_AUTOMAKE(svgl, 0.1, [])
+
+AC_LANG_CPLUSPLUS
+AC_PROG_MAKE_SET
+#AC_PROG_CC
+AC_PROG_CXX
+
+AC_PROG_LIBTOOL
+
+AC_CHECK_PROGS(FIND,find)
+AC_CHECK_PROGS(MKDIR,mkdir)
+AC_CHECK_PROGS(TOUCH,touch)
+AC_CHECK_PROGS(PYTHON,python)
+
+# set to nop to disable silent make mode (we may add --disable-silent if needed)
+DISABLE_SILENT=
+AC_SUBST(DISABLE_SILENT)
+
+# for setting pkgincludedir in each source subdirectory
+SVGL_INCLUDEDIR='${includedir}'/svgl
+AC_SUBST(SVGL_INCLUDEDIR)
+#rel2abs="sh $srcdir/tools/rel2abs"
+svgl_srcdir="$PWD"
+AC_SUBST(svgl_srcdir)
+
+svgl_builddir="$PWD"
+AC_SUBST(svgl_builddir)
+
+
+AC_CHECK_PROG(PYTHON, python, yes, no)
+if test $PYTHON = no; then
+	AC_MSG_ERROR(couldn't find python)
+fi
+
+
+# -------------------------------------------------
+
+SYSTEM=`uname -s`
+
+if test -z "$GXX"
+then
+  # Using platform specific C++ compiler
+  case $SYSTEM in
+  IRIX*)
+    # The following line is needed to force libtool to use CC and not gcc
+    # Note that this must be set before libtool is called
+    CC=CC
+    ABI=`getabi add`
+    CXXFLAGS="-LANG:std -ptused $ABI $CXXFLAGS"
+    LDFLAGS="-LANG:std -ptused $ABI $LDFLAGS"
+    DEPMODE="depmode=sgi"
+    ;;
+  esac
+else
+  # Using g++
+  DEPMODE="depmode=gcc"
+fi
+
+AC_SUBST(DEPMODE)
+
+# -------------------------------------------------
+
+OPENGL_DIR="GL"
+case $SYSTEM in
+IRIX*)
+   AC_DEFINE([OS_IS_IRIX],,[defined if OS is IRIX])
+   OS=IRIX ;;
+SunOS)
+   AC_DEFINE(OS_IS_SUNOS,,[defined if OS is SUN])
+   OS=SUNOS ;;
+Linux)
+   AC_DEFINE(OS_IS_LINUX,,[defined if OS is LINUX])
+   OS=LINUX ;;
+Darwin)
+   AC_DEFINE(OS_IS_MACOSX,,[defined if OS is MAC OS X])
+   OS=MACOSX
+   OPENGL_DIR="OpenGL"
+   #GLINC=`pwd`/local/include
+   #(mkdir -p $GLINC/GL && cd $GLINC/GL && ln -fs /System/Library/Frameworks/OpenGL.framework/Headers/* .)
+   CPPFLAGS="-I/sw/include $CPPFLAGS"
+   LDFLAGS="-L/sw/lib $LDFLAGS"
+
+   CPPFLAGS="-I/System/Library/Frameworks/AGL.framework/Headers $CPPFLAGS"
+#   CPPFLAGS="-I$GLINC -I/System/Library/Frameworks/AGL.framework/Headers $CPPFLAGS"
+   LIBS="$LIBS -framework OpenGL"
+# Nicolas -framework AGL -framework Carbon
+   # -framework CoreServices -framework ApplicationServices
+   ;;
+*CYGWIN*)
+   OS=Cygwin
+   CPPFLAGS="-DWIN32 $CPPFLAGS"
+   LIBS="$LIBS -lglu32 -lopengl32"
+   with_x=no
+   ;;
+*-mingw32)
+   OS=Mingw32
+   CPPFLAGS="-DWIN32 $CPPFLAGS"
+   LIBS="$LIBS -lglu32 -lopengl32"
+   with_x=no
+   ;;
+
+
+*)
+   OS=unknown ;;
+esac
+AC_SUBST(OS)
+
+
+# -------------------------------------------------
+
+AC_PATH_XTRA
+LIBS="$X_LIBS $LIBS"
+
+AC_CHECK_PROG(FREETYPE_CONFIG, freetype-config, yes, no)
+if test $FREETYPE_CONFIG = yes; then
+	CPPFLAGS="`freetype-config --cflags` $CPPFLAGS"
+	LIBS="`freetype-config --libs` $LIBS"
+fi
+
+
+AC_CHECK_HEADERS(expat.h, [], [AC_MSG_ERROR(couldn't find expat headers)])
+AC_CHECK_LIB(expat, XML_Parse, [], [AC_MSG_ERROR(couldn't find expat library)])
+LIBS="-lexpat $LIBS"
+
+AC_CHECK_HEADERS(png.h)
+AC_CHECK_LIB(png,png_check_sig, [], [AC_MSG_ERROR(couldn't find png library)])
+LIBS="-lpng $LIBS"
+
+PKG_CONFIG_PATH="$ac_pwd/glft/"
+export PKG_CONFIG_PATH
+PKG_CHECK_MODULES(GLFT, [glft])
+#CPPFLAGS="$CPPFLAGS $GLFT_CFLAGS"
+#LDFLAGS="$LDFLAGS $GLFT_LDFLAGS"
+#LIBS="$LIBS $GLFT_LIBS"
+
+dnl AC_DEFINE(HAVE_GLFT,,[defined if GLFT is present])
+dnl HAVE_GLFT=0
+dnl AC_CHECK_PROG(GLFT_CONFIG, glft-config, yes, no)
+dnl if test $GLFT_CONFIG = yes; then
+dnl   HAVE_GLFT=1
+dnl   AC_DEFINE(HAVE_GLFT)
+dnl   CPPFLAGS="$CPPFLAGS `glft-config --cppflags`"
+dnl   LDFLAGS="$LDFLAGS `glft-config --ldflags`"
+dnl   LIBS="`glft-config --libs` $LIBS"  
+dnl else
+dnl   AC_MSG_ERROR("couldn't find glft-config")
+dnl fi
+dnl AC_SUBST(HAVE_GLFT)
+
+#AC_LANG_PUSH(C++)
+#AC_CHECK_HEADERS(glft/glft.h)
+#AC_CHECK_LIB(glft,glft_init, [], [AC_MSG_ERROR(couldn't find glft library)])
+#AC_LANG_POP(C++)
+
+# -------------------------------------------------
+
+AC_DEFINE(HAVE_OPENGL,,[defined if OPENGL is present])
+HAVE_OPENGL=0
+AC_CHECK_HEADERS([$OPENGL_DIR/gl.h],[HAVE_OPENGL=1 ; AC_DEFINE(HAVE_OPENGL)], [AC_MSG_ERROR(couldn't find GL headers)])
+AC_SUBST(HAVE_OPENGL)
+
+
+AC_DEFINE(HAVE_GLX,,[defined if GLX is present])
+AC_DEFINE(HAVE_AGL,,[defined if AGL is present])
+HAVE_GLX=0
+HAVE_AGL=0
+
+case $OS in
+Cygwin)
+    ;;
+MACOSX)
+    # We use frameworks on MACOSX, not libraries
+    AC_CHECK_HEADERS(AGL/agl.h,[HAVE_AGL=1 ; AC_DEFINE(HAVE_AGL)])
+    ;;
+*)
+    AC_CHECK_LIB(GL,glFlush)
+    # GLU is used by gl/scenegraph/glViewPoint.*
+    AC_CHECK_HEADERS(GL/glx.h,[HAVE_GLX=1 ; AC_DEFINE(HAVE_GLX)])
+    ;;
+esac
+AC_SUBST(HAVE_GLX)
+AC_SUBST(HAVE_AGL)
+
+AC_DEFINE(HAVE_GLU,,[defined if GLU is present])
+HAVE_GLU=0
+AC_CHECK_HEADERS(GL/glu.h,[HAVE_GLU=1 ; AC_DEFINE(HAVE_GLU)])
+if test $HAVE_GLU = 1; then
+
+case $OS in
+MACOSX)
+    ;;
+Cygwin)
+    ;;
+*)
+    AC_CHECK_LIB(GLU,gluNewQuadric,[],[AC_MSG_ERROR(couldn't find GLU library)])
+    ;;
+esac
+fi
+AC_SUBST(HAVE_GLU)
+
+apps=""
+demos=""
+
+HAVE_GLUT_HEADER=0
+HAVE_GLUT_LIB=0
+
+case $SYSTEM in
+Darwin)
+#   GLUT_INC=`pwd`/local/include/GL
+#  (mkdir -p $GLUT_INC && cd $GLUT_INC && ln -fs /System/Library/Frameworks/GLUT.framework/Headers/* .)
+   HAVE_GLUT_HEADER=1
+   HAVE_GLUT_LIB=1
+   ;;
+*CYGWIN*)
+   HAVE_GLUT_HEADER=1
+   HAVE_GLUT_LIB=1
+  ;;
+*)
+   AC_CHECK_HEADERS(GL/glut.h,[HAVE_GLUT_HEADER=1], [])
+   AC_CHECK_LIB(glut,glutInit,[HAVE_GLUT_LIB=1],[])
+   ;;
+esac
+
+
+HAVE_GLUT=0
+if test $HAVE_GLUT_HEADER -eq 1 -a $HAVE_GLUT_LIB -eq 1;
+then
+	HAVE_GLUT=1
+	AC_MSG_RESULT(glut is here glutSVGViewer and tutorials will be built);
+	apps="apps/glutSVGViewer/glutSVGViewer $apps"
+	demos="tutorial"
+else
+	HAVE_GLUT=0
+	AC_MSG_WARN(glut is not here: glutSVGViewer and tutorials will not be built);
+fi
+
+glutSVGViewer_CPPFLAGS=""
+glutSVGViewer_LIBS=""
+if test $HAVE_GLUT; then
+case $OS in
+MACOSX)
+   	glutSVGViewer_LIBS="-framework GLUT -framework Foundation"
+	tutorial_LIBS="-framework GLUT -framework Foundation"
+	#tests_CPPFLAGS="-I$GLUT_INC -I/System/Library/Frameworks/GLUT.framework/Headers"
+	tests_LIBS="-framework GLUT -framework Foundation"
+    ;;
+Cygwin)
+    glutSVGViewer_LIBS="-lglut32"
+    tutorial_LIBS="-lglut32"
+    ;;
+*)
+    glutSVGViewer_LIBS="-lglut -lXmu"
+    tutorial_LIBS="-lglut -lXmu"
+    tests_LIBS="-lglut -lXmu"
+    ;;
+esac
+fi
+
+
+AC_SUBST(glutSVGViewer_CPPFLAGS)
+AC_SUBST(glutSVGViewer_LIBS)
+AC_SUBST(tutorial_CPPFLAGS)
+AC_SUBST(tutorial_LIBS)
+AC_SUBST(tests_CPPFLAGS)
+AC_SUBST(tests_LIBS)
+
+HAVE_OSMESA_HEADER=0
+HAVE_OSMESA_LIB=0
+AC_CHECK_HEADERS(GL/osmesa.h,[HAVE_OSMESA_HEADER=1], [])
+AC_CHECK_LIB(OSMesa,OSMesaCreateContext,[HAVE_OSMESA_LIB=1],[])
+HAVE_OSMESA=0
+if test $HAVE_OSMESA_HEADER -eq 1 -a $HAVE_OSMESA_LIB -eq 1;
+then
+	HAVE_OSMESA=1
+	AC_MSG_RESULT(OSMesa is here svg2raster could have been built but is not maintained enough);
+else
+	HAVE_OSMESA=0
+	AC_MSG_WARN(OSMesa is not here svg2raster will not be built);
+fi
+
+
+AC_SUBST(apps)
+AC_SUBST(demos)
+
+HAVE_GC_HEADER=0
+HAVE_GC_LIB=0
+AC_CHECK_HEADERS(gc.h, [HAVE_GC_HEADER=1], [AC_MSG_ERROR(couldn't find gc headers)])
+AC_CHECK_LIB(gc, GC_dont_gc, [HAVE_GC_LIB=1], [AC_MSG_ERROR(couldn't find gc library)])
+SVGL_USE_GC=0
+if test $HAVE_GC_HEADER -eq 1 -a $HAVE_GC_LIB -eq 1;
+then
+	SVGL_USE_GC=1
+	LIBS="$LIBS -lgc"
+fi
+AC_SUBST(SVGL_USE_GC)	
+
+CPPFLAGS="$CPPFLAGS $GLFT_CFLAGS"
+#LDFLAGS="$LDFLAGS $GLFT_LDFLAGS"
+#LIBS="$LIBS $GLFT_LIBS"
+
+
+# -------------------------------------------------
+
+#SORT="sh $srcdir/tools/sort"
+#CPPFLAGS=`env SORTINPUT="$CPPFLAGS" $SORT`
+#LDFLAGS=`env SORTINPUT="$LDFLAGS" $SORT`
+#LIBS=`env SORTINPUT="$LIBS" SORTEXCLUDE="-framework" $SORT`
+
+# -------------------------------------------------
+
+
+
+echo ----------------
+echo configured with
+echo CPPFLAGS="$CPPFLAGS"
+echo LDFLAGS="$LDFLAGS"
+echo LIBS="$LIBS"
+
+# -------------------------------------------------
+
+AC_CONFIG_FILES(Makefile)
+AC_CONFIG_FILES([
+		 scripts/Makefile
+		 src/Makefile
+		 src/agg/Makefile
+		 src/svgl/Makefile
+		 src/utils/Makefile
+		 src/w3c/Makefile
+		 src/w3c/css/Makefile
+		 src/w3c/dom/Makefile
+		 src/w3c/dom/impl/Makefile
+		 src/w3c/dom/ext/Makefile
+		 src/w3c/svg/Makefile
+		 src/w3c/events/Makefile
+		 src/w3c/smil/Makefile
+		 tests/Makefile
+		 apps/Makefile
+		 apps/glutSVGViewer/Makefile
+		 apps/svg2raster/Makefile
+		 demos/Makefile
+		 demos/tutorial/Makefile])
+AC_CONFIG_FILES([scripts/config.py])
+AC_CONFIG_FILES([svgl.pc svgl-uninstalled.pc])
+
+AC_OUTPUT
