@@ -11,7 +11,7 @@
 
 # --------------------------------------------------------
 
-AC_PREREQ(2.57)
+AC_PREREQ(2.69)
 AC_INIT(glft, 0.1, conversy@enac.fr)
 AC_CONFIG_AUX_DIR(build/automake/utils)
 
@@ -23,7 +23,7 @@ AC_CONFIG_SRCDIR([glft/glft.hpp])
 AC_CANONICAL_HOST
 
 AC_DISABLE_STATIC
-AC_PROG_LIBTOOL
+LT_INIT
 
 AC_LANG_CPLUSPLUS
 AC_PROG_CXX
