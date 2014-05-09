@@ -11,7 +11,7 @@
 
 # --------------------------------------------------------
 
-AC_PREREQ(2.69)
+AC_PREREQ(2.63)
 AC_INIT(glft, 0.1, conversy@enac.fr)
 AC_CONFIG_AUX_DIR(build/automake/utils)
 
