@@ -22,6 +22,8 @@ AC_CONFIG_SRCDIR([glft/glft.hpp])
 
 AC_CANONICAL_HOST
 
+AC_PROG_LIBTOOL
+
 LT_INIT([disable-static])
 
 AC_LANG_CPLUSPLUS
